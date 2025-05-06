@@ -1,0 +1,548 @@
+@import 'primeng/resources/themes/lara-light-blue/theme.css';
+@import 'primeng/resources/primeng.min.css';
+@import 'primeicons/primeicons.css';
+
+$primary-blue: #1e88e5;
+$secondary-blue: #42a5f5;
+$primary-pink: #e91e63;
+$secondary-pink: #f48fb1;
+$primary-purple: #9c27b0;
+$secondary-purple: #ba68c8;
+$text-primary: #212121;
+$text-secondary: #757575;
+$card-background: #ffffff;
+$border-color: #e0e0e0;
+
+.active-tenders-container {
+  padding: 1.5rem;
+}
+
+.card {
+  background-color: $card-background;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  padding: 1.5rem;
+}
+
+h5 {
+  color: $text-primary;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.filters-and-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+
+  .search-filter {
+    flex: 1 1 200px;
+  }
+  .status-filter, .sort-filter{
+    flex: 1 1 150px;
+  }
+
+  .new-tender-button {
+    margin-left: auto;
+  }
+}
+p-dropdown{
+  width: 200px;
+  &::ng-deep .p-dropdown-label{
+    color: $text-primary;
+  }
+  &::ng-deep .p-dropdown-trigger {
+    background-color: $card-background;
+    border-left: 1px solid $border-color;
+  }
+}
+
+::ng-deep .p-steps {
+  margin-bottom: 1.5rem;
+  .p-steps-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    padding: 1rem 0;
+  }
+
+  .p-steps-item {
+    flex: 1;
+    text-align: center;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 1rem;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: $border-color;
+      z-index: 1;
+    }
+
+    &:first-child::before {
+      display: none;
+    }
+
+    .p-steps-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      background-color: $card-background;
+      color: $text-secondary;
+      border: 2px solid $border-color;
+      z-index: 2;
+      font-size: 0.875rem;
+    }
+
+    .p-steps-title {
+      margin-top: 0.5rem;
+      color: $text-primary;
+      font-size: 0.875rem;
+    }
+
+    &.p-highlight {
+      .p-steps-number {
+        background-color: $primary-blue;
+        color: white;
+        border-color: $primary-blue;
+      }
+      .p-steps-title {
+        color: $primary-blue;
+        font-weight: 500;
+      }
+    }
+
+    &.p-disabled {
+      .p-steps-number {
+        background-color: $card-background;
+        color: $text-secondary;
+        border-color: $border-color;
+      }
+      .p-steps-title {
+        color: $text-secondary;
+      }
+    }
+  }
+}
+
+::ng-deep .p-table {
+  .p-datatable-header {
+    background-color: $card-background;
+    color: $text-primary;
+    border: 1px solid $border-color;
+    padding: 1rem;
+    font-weight: 500;
+  }
+  .p-datatable-thead > tr > th {
+    background-color: $card-background;
+    color: $text-primary;
+    border: 1px solid $border-color;
+    padding: 0.75rem;
+    font-weight: 500;
+  }
+  .p-datatable-tbody > tr > td {
+    border-bottom: 1px solid $border-color;
+    padding: 0.75rem;
+    color: $text-primary;
+  }
+  .p-paginator-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+  }
+  .p-paginator{
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    & .p-paginator-page, .p-paginator-current, .p-paginator-next, .p-paginator-prev, .p-paginator-last, .p-paginator-first{
+      border-radius: 4px;
+      padding: 0.5rem;
+      margin: 0 0.25rem;
+      border: 1px solid transparent;
+      color: $text-primary;
+      &:hover{
+        background-color: rgba($primary-blue, 0.1);
+        border-color: rgba($primary-blue, 0.3);
+      }
+    }
+    & .p-highlight{
+      background-color: $primary-blue;
+      color: white;
+      border-color: $primary-blue;
+      &:hover{
+        background-color: $primary-blue;
+        color: white;
+        border-color: $primary-blue;
+      }
+    }
+  }
+}
+
+.status-badge {
+  border-radius: 4px;
+  padding: 0.25em 0.5em;
+  font-size: 0.8rem;
+  &.status-active {
+    background-color: rgba($primary-blue, 0.2);
+    color: $primary-blue;
+  }
+  &.status-submission {
+    background-color: rgba($primary-pink, 0.2);
+    color: $primary-pink;
+  }
+  &.status-review {
+    background-color: rgba($primary-purple, 0.2);
+    color: $primary-purple;
+  }
+  &.status-completed {
+    background-color: rgba(green, 0.2);
+    color: green;
+  }
+  &.status-planning {
+    background-color: rgba(orange, 0.2);
+    color: orange;
+  }
+  &.status-default{
+    background-color: $border-color;
+    color: $text-secondary;
+  }
+}
+
+.priority-badge {
+  border-radius: 4px;
+  padding: 0.25em 0.5em;
+  font-size: 0.8rem;
+  &.priority-high {
+    background-color: rgba($primary-pink, 0.2);
+    color: $primary-pink;
+  }
+  &.priority-medium {
+    background-color: rgba($primary-blue, 0.2);
+    color: $primary-blue;
+  }
+  &.priority-low {
+    background-color: rgba(green, 0.2);
+    color: green;
+  }
+  &.priority-default{
+    background-color: $border-color;
+    color: $text-secondary;
+  }
+}
+.summary-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.summary-card {
+  flex: 1 1 200px;
+  background-color: $card-background;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.summary-title {
+  color: $text-secondary;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.summary-value {
+  color: $text-primary;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* active-tenders.component.scss */
+:host ::ng-deep {
+  .tender-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    .title-section {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      h5 {
+        margin: 0;
+      }
+
+      .tender-count {
+        font-size: 0.875rem;
+      }
+    }
+  }
+
+  .tender-row {
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: var(--surface-100) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .tender-info {
+    .tender-title {
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .tender-meta {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.875rem;
+      color: var(--text-color-secondary);
+      margin-bottom: 0.5rem;
+
+      i {
+        margin-right: 0.25rem;
+      }
+    }
+
+    .tender-tags {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+
+      .tender-tag {
+        background-color: var(--surface-200);
+        font-size: 0.75rem;
+      }
+
+      .more-tags {
+        font-size: 0.75rem;
+        color: var(--text-color-secondary);
+      }
+    }
+  }
+
+  .category-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    &.it-technology {
+      background-color: #E3F2FD;
+      color: #1976D2;
+    }
+
+    &.construction {
+      background-color: #FFF3E0;
+      color: #F57C00;
+    }
+
+    &.services {
+      background-color: #E8F5E9;
+      color: #388E3C;
+    }
+
+    &.supplies {
+      background-color: #F3E5F5;
+      color: #8E24AA;
+    }
+  }
+
+  .budget-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    .budget-amount {
+      font-weight: 600;
+      color: var(--text-color);
+    }
+
+    .budget-avg {
+      font-size: 0.875rem;
+      color: var(--text-color-secondary);
+    }
+  }
+
+  .timeline-info {
+    .date-range {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.25rem;
+      color: var(--text-color-secondary);
+    }
+
+    .days-remaining {
+      font-size: 0.875rem;
+      font-weight: 500;
+
+      &.urgent {
+        color: var(--red-500);
+      }
+    }
+  }
+
+  .progress-info {
+    .p-progressbar {
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-text {
+      font-size: 0.875rem;
+      color: var(--text-color-secondary);
+    }
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 0.5rem;
+
+    button {
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .tender-detail-dialog {
+    .detail-section {
+      margin-bottom: 2rem;
+
+      h6 {
+        color: var(--text-color-secondary);
+        margin-bottom: 1rem;
+      }
+    }
+
+    .requirement-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+
+        i {
+          color: var(--green-500);
+        }
+      }
+    }
+
+    .tender-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+
+      .stat-card {
+        background: var(--surface-100);
+        padding: 1rem;
+        border-radius: 8px;
+        text-align: center;
+
+        .stat-label {
+          display: block;
+          color: var(--text-color-secondary);
+          font-size: 0.875rem;
+          margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+          font-size: 1.5rem;
+          font-weight: 600;
+          color: var(--primary-color);
+        }
+      }
+    }
+
+    .timeline-event {
+      padding: 1rem;
+      border-radius: 8px;
+      background: var(--surface-100);
+
+      &.completed {
+        background: var(--green-100);
+        border-left: 4px solid var(--green-500);
+      }
+
+      h6 {
+        margin: 0 0 0.5rem 0;
+        color: var(--text-color);
+      }
+
+      p {
+        margin: 0;
+        color: var(--text-color-secondary);
+      }
+    }
+  }
+
+  .analytics-dialog {
+    .p-card {
+      height: 100%;
+    }
+  }
+
+  .empty-message {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-color-secondary);
+
+    .empty-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      margin: 0 0 0.5rem 0;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+}
+
+// Add animation keyframes
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+

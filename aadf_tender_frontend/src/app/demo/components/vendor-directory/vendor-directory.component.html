@@ -1,0 +1,286 @@
+<!-- vendor-directory.component.html -->
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <h5>Vendor Directory</h5>
+
+            <!-- Filters -->
+            <p-card header="Filters" styleClass="mb-4">
+                <div class="grid">
+                    <div class="col-12 md:col-3">
+                        <span class="p-float-label">
+                            <input pInputText id="search" [(ngModel)]="searchString" />
+                            <label for="search">Search Vendors</label>
+                        </span>
+                    </div>
+
+                    <div class="col-12 md:col-3">
+                        <p-dropdown [options]="categories"
+                                    [(ngModel)]="selectedCategory"
+                                    optionLabel="name"
+                                    placeholder="Select Category"
+                                    [style]="{'width':'100%'}">
+                        </p-dropdown>
+                    </div>
+
+                    <div class="col-12 md:col-3">
+                        <p-dropdown [options]="countries"
+                                    [(ngModel)]="selectedCountry"
+                                    optionLabel="name"
+                                    placeholder="Select Country"
+                                    [style]="{'width':'100%'}">
+                        </p-dropdown>
+                    </div>
+
+                    <div class="col-12 md:col-3">
+                        <p-dropdown [options]="statuses"
+                                    [(ngModel)]="selectedStatus"
+                                    optionLabel="label"
+                                    placeholder="Select Status"
+                                    [style]="{'width':'100%'}">
+                        </p-dropdown>
+                    </div>
+
+                    <div class="col-12 flex justify-content-end">
+                        <p-button label="Reset"
+                                  icon="pi pi-refresh"
+                                  styleClass="p-button-secondary mr-2"
+                                  (click)="resetFilters()">
+                        </p-button>
+                        <p-button label="Apply"
+                                  icon="pi pi-search"
+                                  (click)="applyFilters()">
+                        </p-button>
+                    </div>
+                </div>
+            </p-card>
+
+            <!-- Action Button -->
+            <div class="mb-4">
+                <p-button label="Add Vendor"
+                          icon="pi pi-plus"
+                          (click)="addVendor()">
+                </p-button>
+            </div>
+
+            <!-- Vendor Table -->
+            <p-table [value]="vendors"
+                     [lazy]="true"
+                     (onLazyLoad)="loadVendors($event)"
+                     [totalRecords]="totalRecords"
+                     [loading]="loading"
+                     [paginator]="true"
+                     [rows]="10"
+                     [rowsPerPageOptions]="[10,20,50]"
+                     responsiveLayout="scroll">
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Vendor ID</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Country</th>
+                        <th>Contact Person</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-vendor>
+                    <tr>
+                        <td>{{vendor.vendorId}}</td>
+                        <td>{{vendor.name}}</td>
+                        <td>{{vendor.category}}</td>
+                        <td>{{vendor.country}}</td>
+                        <td>{{vendor.contactPerson}}</td>
+                        <td>{{vendor.email}}</td>
+                        <td>{{vendor.phone}}</td>
+                        <td>
+                            <p-tag [value]="vendor.status"
+                                   [severity]="getStatusColor(vendor.status)">
+                            </p-tag>
+                        </td>
+                        <td>
+                            <button pButton icon="pi pi-eye"
+                                    class="p-button-rounded p-button-secondary p-button-sm mr-2"
+                                    (click)="viewVendor(vendor)"
+                                    pTooltip="View Details">
+                            </button>
+                            <button pButton icon="pi pi-pencil"
+                                    class="p-button-rounded p-button-info p-button-sm mr-2"
+                                    (click)="editVendor(vendor)"
+                                    pTooltip="Edit">
+                            </button>
+                            <button pButton icon="pi pi-trash"
+                                    class="p-button-rounded p-button-danger p-button-sm"
+                                    (click)="deleteVendor(vendor)"
+                                    pTooltip="Delete">
+                            </button>
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="9" class="text-center">No vendors found.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+
+<!-- Add/Edit Vendor Dialog -->
+<p-dialog [(visible)]="displayAddEditDialog"
+          [header]="isEditMode ? 'Edit Vendor' : 'Add Vendor'"
+          [modal]="true"
+          [style]="{width: '50vw'}"
+          [draggable]="false"
+          [resizable]="false">
+
+    <div class="grid p-fluid" *ngIf="selectedVendor">
+        <div class="col-12 md:col-6">
+            <div class="field">
+                <label>Name*</label>
+                <input pInputText [(ngModel)]="selectedVendor.name" required />
+            </div>
+        </div>
+
+        <div class="col-12 md:col-6">
+            <div class="field">
+                <label>Category*</label>
+                <p-dropdown [options]="categories"
+                            [(ngModel)]="selectedVendor.category"
+                            optionLabel="name"
+                            [style]="{'width':'100%'}"
+                            required>
+                </p-dropdown>
+            </div>
+        </div>
+
+        <div class="col-12 md:col-6">
+            <div class="field">
+                <label>Country*</label>
+                <p-dropdown [options]="countries"
+                            [(ngModel)]="selectedVendor.country"
+                            optionLabel="name"
+                            [style]="{'width':'100%'}"
+                            required>
+                </p-dropdown>
+            </div>
+        </div>
+
+        <div class="col-12 md:col-6">
+            <div class="field">
+                <label>Contact Person*</label>
+                <input pInputText [(ngModel)]="selectedVendor.contactPerson" required />
+            </div>
+        </div>
+
+        <div class="col-12 md:col-6">
+            <div class="field">
+                <label>Email*</label>
+                <input pInputText [(ngModel)]="selectedVendor.email" required />
+            </div>
+        </div>
+
+        <div class="col-12 md:col-6">
+            <div class="field">
+                <label>Phone*</label>
+                <input pInputText [(ngModel)]="selectedVendor.phone" required />
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="field">
+                <label>Status</label>
+                <p-dropdown [options]="statuses"
+                            [(ngModel)]="selectedVendor.status"
+                            optionLabel="label"
+                            [style]="{'width':'100%'}">
+                </p-dropdown>
+            </div>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <button pButton label="Cancel"
+                icon="pi pi-times"
+                class="p-button-text"
+                (click)="displayAddEditDialog = false">
+        </button>
+        <button pButton label="Save"
+                icon="pi pi-check"
+                class="p-button-text"
+                (click)="saveVendor()">
+        </button>
+    </ng-template>
+</p-dialog>
+
+<!-- View Vendor Dialog -->
+<p-dialog [(visible)]="displayViewDialog"
+          header="Vendor Details"
+          [modal]="true"
+          [style]="{width: '50vw'}"
+          [draggable]="false"
+          [resizable]="false">
+
+    <div class="grid" *ngIf="selectedVendor">
+        <div class="col-12 md:col-6">
+            <h6>Basic Information</h6>
+            <div class="field">
+                <label>Vendor ID</label>
+                <div class="font-medium">{{selectedVendor.vendorId}}</div>
+            </div>
+            <div class="field">
+                <label>Name</label>
+                <div class="font-medium">{{selectedVendor.name}}</div>
+            </div>
+            <div class="field">
+                <label>Category</label>
+                <div class="font-medium">{{selectedVendor.category}}</div>
+            </div>
+            <div class="field">
+                <label>Country</label>
+                <div class="font-medium">{{selectedVendor.country}}</div>
+            </div>
+        </div>
+        <div class="col-12 md:col-6">
+            <h6>Contact Information</h6>
+            <div class="field">
+                <label>Contact Person</label>
+                <div class="font-medium">{{selectedVendor.contactPerson}}</div>
+            </div>
+            <div class="field">
+                <label>Email</label>
+                <div class="font-medium">{{selectedVendor.email}}</div>
+            </div>
+            <div class="field">
+                <label>Phone</label>
+                <div class="font-medium">{{selectedVendor.phone}}</div>
+            </div>
+            <div class="field">
+                <label>Status</label>
+                <p-tag [value]="selectedVendor.status"
+                       [severity]="getStatusColor(selectedVendor.status)">
+                </p-tag>
+            </div>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <button pButton label="Close"
+                icon="pi pi-times"
+                class="p-button-text"
+                (click)="displayViewDialog = false">
+        </button>
+    </ng-template>
+</p-dialog>
+
+<!-- Confirmation Dialog -->
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+<!-- Toast -->
+<p-toast></p-toast>

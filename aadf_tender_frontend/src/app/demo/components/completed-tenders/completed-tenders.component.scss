@@ -1,0 +1,51 @@
+:host ::ng-deep {
+  .p-steps .p-steps-item.p-highlight .p-steps-number {
+    background: var(--primary-color);
+    color: var(--primary-color-text);
+  }
+
+  .p-steps .p-steps-item:before {
+    border-top: 1px solid var(--surface-d);
+  }
+
+  .p-panel .p-panel-header {
+    background: var(--surface-f);
+    color: var(--text-color-secondary);
+    border: 1px solid var(--surface-d);
+  }
+
+  .p-card {
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+
+    .p-card-body {
+      padding: 1rem;
+    }
+  }
+
+  .p-dialog-content {
+    padding: 1.5rem;
+  }
+}
+
+.metrics-card {
+  text-align: center;
+  padding: 1rem;
+  border-radius: 8px;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+
+  .metric-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .metric-label {
+    font-size: 0.875rem;
+    color: var(--text-color-secondary);
+  }
+}

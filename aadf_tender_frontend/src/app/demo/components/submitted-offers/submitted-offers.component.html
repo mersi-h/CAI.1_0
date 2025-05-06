@@ -1,0 +1,232 @@
+<!-- File: pending-offers.component.html -->
+<div class="pending-offers-container">
+    <h1 class="page-title">Pending Offers</h1>
+    <p class="page-subtitle">Manage and edit offers before they enter the review process</p>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+        <div class="search-container">
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+                type="text"
+                pInputText
+                [(ngModel)]="searchText"
+                placeholder="Search offers..."
+                class="p-inputtext-sm"
+        />
+      </span>
+        </div>
+
+        <div class="filter-options">
+            <p-dropdown
+                    [options]="tenderOptions"
+                    [(ngModel)]="selectedTenderId"
+                    placeholder="Filter by Tender"
+                    styleClass="p-button-outlined p-button-sm"
+            ></p-dropdown>
+
+            <p-button
+                    label="Create New"
+                    icon="pi pi-plus"
+                    styleClass="p-button-sm"
+                    (onClick)="createNewOffer()"
+            ></p-button>
+
+            <p-button
+                    label="Export"
+                    icon="pi pi-download"
+                    styleClass="p-button-sm p-button-outlined"
+                    (onClick)="exportData()"
+            ></p-button>
+        </div>
+    </div>
+
+    <!-- Toast and Confirmation -->
+    <p-toast></p-toast>
+    <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+    <!-- Data Table -->
+    <p-table
+            [value]="filterOffers()"
+            [paginator]="true"
+            [rows]="10"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [rowsPerPageOptions]="[5, 10, 25]"
+            styleClass="p-datatable-responsive"
+            [style]="{'min-width': '100%'}"
+    >
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="submissionDate">
+                    Date Submitted <p-sortIcon field="submissionDate"></p-sortIcon>
+                </th>
+                <th pSortableColumn="vendorName">
+                    Vendor <p-sortIcon field="vendorName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="tenderId">
+                    Tender ID <p-sortIcon field="tenderId"></p-sortIcon>
+                </th>
+                <th pSortableColumn="tenderTitle">
+                    Tender Title <p-sortIcon field="tenderTitle"></p-sortIcon>
+                </th>
+                <th pSortableColumn="offerAmount">
+                    Offer Amount <p-sortIcon field="offerAmount"></p-sortIcon>
+                </th>
+                <th pSortableColumn="proposedDuration">
+                    Duration (Days) <p-sortIcon field="proposedDuration"></p-sortIcon>
+                </th>
+                <th pSortableColumn="status">
+                    Status <p-sortIcon field="status"></p-sortIcon>
+                </th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-offer>
+            <tr>
+                <td>
+                    <div class="date-display">
+                        <span class="date-main">{{ offer.submissionDate | date:'MMM d, yyyy' }}</span>
+                        <span class="date-detail">
+              {{ formatRelativeTime(offer.submissionDate) }},
+                            {{ offer.submissionDate | date:'h:mm a' }}
+            </span>
+                        <span class="date-edited" *ngIf="offer.lastEdited">
+              {{ formatLastEdited(offer.lastEdited) }}
+            </span>
+                    </div>
+                </td>
+                <td>{{ offer.vendorName }}</td>
+                <td>{{ offer.tenderId }}</td>
+                <td>{{ offer.tenderTitle }}</td>
+                <td>{{ offer.offerAmount | currency }}</td>
+                <td>{{ offer.proposedDuration }} days</td>
+                <td>
+          <span class="status-badge" [ngClass]="getStatusClass(offer.status)">
+            {{ offer.status }}
+          </span>
+                </td>
+                <td>
+                    <div class="action-buttons">
+                        <p-button
+                                icon="pi pi-pencil"
+                                styleClass="p-button-sm p-button-info mr-2"
+                                [disabled]="offer.status === 'Under Review'"
+                                (onClick)="editOffer(offer)"
+                                pTooltip="Edit Offer"
+                        ></p-button>
+
+                        <p-button
+                                *ngIf="offer.status === 'Draft'"
+                                icon="pi pi-send"
+                                styleClass="p-button-sm p-button-success mr-2"
+                                (onClick)="submitOffer(offer)"
+                                pTooltip="Submit Offer"
+                        ></p-button>
+
+                        <p-button
+                                *ngIf="offer.status === 'Submitted'"
+                                icon="pi pi-undo"
+                                styleClass="p-button-sm p-button-warning"
+                                (onClick)="withdrawOffer(offer)"
+                                pTooltip="Withdraw Offer"
+                        ></p-button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8" class="text-center p-4">
+                    No pending offers found matching your criteria.
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<!-- Edit Offer Dialog -->
+<p-dialog
+        [(visible)]="displayEditDialog"
+        [style]="{ width: '600px' }"
+        [modal]="true"
+        styleClass="p-fluid"
+        [draggable]="false"
+        [resizable]="false"
+        [closeOnEscape]="true"
+        header="Edit Offer">
+
+    <form [formGroup]="offerForm">
+        <input type="hidden" formControlName="id" />
+
+        <div class="field">
+            <label for="offerAmount">Offer Amount</label>
+            <p-inputNumber
+                    id="offerAmount"
+                    formControlName="offerAmount"
+                    [showButtons]="false"
+                    mode="currency"
+                    currency="USD"
+                    [minFractionDigits]="0"
+            ></p-inputNumber>
+            <small class="p-error" *ngIf="offerForm.get('offerAmount')?.invalid && offerForm.get('offerAmount')?.touched">
+                Offer amount is required and must be a positive number.
+            </small>
+        </div>
+
+        <div class="field">
+            <label for="proposedDuration">Proposed Duration (days)</label>
+            <p-inputNumber
+                    id="proposedDuration"
+                    formControlName="proposedDuration"
+                    [showButtons]="true"
+                    [min]="1"
+                    [max]="999"
+            ></p-inputNumber>
+            <small class="p-error" *ngIf="offerForm.get('proposedDuration')?.invalid && offerForm.get('proposedDuration')?.touched">
+                Duration is required and must be at least 1 day.
+            </small>
+        </div>
+
+        <div class="field">
+            <label for="technicalDetails">Technical Details</label>
+            <textarea
+                    pInputTextarea
+                    id="technicalDetails"
+                    formControlName="technicalDetails"
+                    [rows]="5"
+                    [cols]="30"
+                    autoResize="autoResize"
+                    placeholder="Describe your technical approach, methodology, and key deliverables..."
+            ></textarea>
+            <small class="p-error" *ngIf="offerForm.get('technicalDetails')?.invalid && offerForm.get('technicalDetails')?.touched">
+                Technical details are required.
+            </small>
+        </div>
+    </form>
+
+    <ng-template pTemplate="footer">
+        <button
+                pButton
+                pRipple
+                type="button"
+                label="Cancel"
+                icon="pi pi-times"
+                class="p-button-text"
+                (click)="displayEditDialog=false"
+        ></button>
+        <button
+                pButton
+                pRipple
+                type="button"
+                label="Save"
+                icon="pi pi-check"
+                class="p-button-text"
+                [disabled]="offerForm.invalid"
+                (click)="saveOffer()"
+        ></button>
+    </ng-template>
+</p-dialog>

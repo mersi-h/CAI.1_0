@@ -1,0 +1,203 @@
+/* audit-logs.component.scss */
+.audit-logs-container {
+  padding: 20px 24px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #333;
+}
+
+.filter-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filter-label {
+  font-size: 14px;
+  margin-right: 12px;
+  color: #333;
+}
+
+.filter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.filter-control {
+  position: relative;
+}
+
+.filter-select {
+  padding: 6px 12px;
+  padding-right: 30px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  font-size: 12px;
+  height: 35px;
+  min-width: 120px;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 12px;
+}
+
+.apply-button {
+  background-color: #0066b2;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 8px 16px;
+  font-size: 12px;
+  height: 35px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #005091;
+  }
+}
+
+.logs-table-container {
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.logs-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+
+  th {
+    font-size: 12px;
+    font-weight: 600;
+    color: #333;
+    background-color: #f5f5f5;
+  }
+
+  tbody tr {
+    &:hover {
+      background-color: #f9f9f9;
+    }
+  }
+}
+
+.username-cell {
+  width: 15%;
+  font-size: 12px;
+}
+
+.action-cell {
+  width: 12%;
+}
+
+.details-cell {
+  width: 58%;
+  font-size: 12px;
+}
+
+.time-cell {
+  width: 15%;
+  font-size: 12px;
+}
+
+.action-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 10px;
+  font-size: 11px;
+  text-align: center;
+  min-width: 85px;
+
+  &.created {
+    background-color: #e6f4ea;
+    color: #137333;
+  }
+
+  &.updated {
+    background-color: #fff0e8;
+    color: #b06000;
+  }
+
+  &.reviewed {
+    background-color: #e8f0fe;
+    color: #185abc;
+  }
+
+  &.deleted {
+    background-color: #fce8e6;
+    color: #c5221f;
+  }
+
+  &.approved {
+    background-color: #e6f4ea;
+    color: #137333;
+  }
+
+  &.rejected {
+    background-color: #fce8e6;
+    color: #c5221f;
+  }
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.pagination-info {
+  font-size: 12px;
+  color: #666;
+}
+
+.pagination-controls {
+  display: flex;
+  gap: 5px;
+}
+
+.page-button {
+  width: 30px;
+  height: 30px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover:not(:disabled) {
+    border-color: #0066b2;
+    color: #0066b2;
+  }
+
+  &.active {
+    background-color: #0066b2;
+    border-color: #0066b2;
+    color: white;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}

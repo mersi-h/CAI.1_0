@@ -1,0 +1,220 @@
+<!-- pending.component.html -->
+<div class="grid">
+    <div class="col-12">
+        <div class="card" [@fadeInOut]>
+            <h5 class="title-with-line">
+                Pending Items
+                <span class="title-badge">{{pendingItems.length}}</span>
+            </h5>
+
+            <!-- Quick Filters -->
+            <div class="filter-container mb-4">
+                <div class="p-inputgroup search-box">
+                    <span class="p-inputgroup-addon">
+                        <i class="pi pi-search"></i>
+                    </span>
+                    <input pInputText
+                           placeholder="Search pending items..."
+                           [(ngModel)]="searchTerm"
+                           class="p-inputtext-lg">
+                </div>
+
+                <div class="category-filters">
+                    <button pButton
+                            *ngFor="let cat of categories"
+                            [label]="cat.label"
+                            [class.active]="selectedCategory === cat.value"
+                            (click)="filterByCategory(cat.value)"
+                            class="p-button-text category-button">
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pending Items Table -->
+            <p-table [value]="pendingItems"
+                     [loading]="loading"
+                     styleClass="animated-table"
+                     [scrollable]="true"
+                     responsiveLayout="scroll">
+
+                <ng-template pTemplate="header">
+                    <tr class="table-header">
+                        <th>Details</th>
+                        <th>Priority</th>
+                        <th>Progress</th>
+                        <th>Due Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-item>
+                    <tr class="table-row" [@fadeInOut]>
+                        <td>
+                            <div class="item-details">
+                                <div class="item-type-badge" [ngClass]="item.type.toLowerCase()">
+                                    {{item.type}}
+                                </div>
+                                <div class="item-info">
+                                    <span class="item-title">{{item.title}}</span>
+                                    <span class="item-assignee">
+                                        <i class="pi pi-user"></i> {{item.assignedTo}}
+                                    </span>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="priority-indicator"
+                                 [style.color]="getPriorityColor(item.priority)">
+                                <i [class]="getPriorityIcon(item.priority)"></i>
+                                {{item.priority | titlecase}}
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="progress-container">
+                                <p-progressBar [value]="item.progress"
+                                               [showValue]="false"
+                                               styleClass="custom-progress">
+                                </p-progressBar>
+                                <span class="progress-label">{{item.progress}}%</span>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="due-date"
+                                 [ngClass]="{'urgent': getDaysRemaining(item.dueDate) <= 3}">
+                                <i class="pi pi-calendar"></i>
+                                <span>{{item.dueDate | date}}</span>
+                                <small class="days-remaining" *ngIf="getDaysRemaining(item.dueDate) > 0">
+                                    ({{getDaysRemaining(item.dueDate)}} days left)
+                                </small>
+                                <span class="overdue" *ngIf="getDaysRemaining(item.dueDate) <= 0">
+                                    Overdue
+                                </span>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="action-buttons">
+                                <button pButton
+                                        icon="pi pi-eye"
+                                        class="p-button-rounded p-button-text p-button-lg view-button"
+                                        (click)="showDetails(item)"
+                                        pTooltip="View Details">
+                                </button>
+                                <button pButton
+                                        icon="pi pi-check"
+                                        class="p-button-rounded p-button-success p-button-lg approve-button"
+                                        (click)="approve(item)"
+                                        pTooltip="Approve">
+                                </button>
+                                <button pButton
+                                        icon="pi pi-times"
+                                        class="p-button-rounded p-button-danger p-button-lg reject-button"
+                                        (click)="reject(item)"
+                                        pTooltip="Reject">
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="5" class="empty-message">
+                            <div class="empty-state">
+                                <i class="pi pi-inbox"></i>
+                                <h3>No Pending Items</h3>
+                                <p>There are no items requiring your attention at the moment.</p>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+
+<!-- Details Dialog -->
+<p-dialog [(visible)]="displayDialog"
+          [header]="selectedItem?.title || ''"
+          [modal]="true"
+          [style]="{width: '50vw'}"
+          [draggable]="false"
+          [resizable]="false"
+          styleClass="item-details-dialog">
+
+    <div class="item-details-content" *ngIf="selectedItem">
+        <div class="detail-section">
+            <h6>Basic Information</h6>
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <label>ID</label>
+                    <span>{{selectedItem.id}}</span>
+                </div>
+                <div class="detail-item">
+                    <label>Type</label>
+                    <span class="item-type-badge" [ngClass]="selectedItem.type.toLowerCase()">
+                        {{selectedItem.type}}
+                    </span>
+                </div>
+                <div class="detail-item">
+                    <label>Priority</label>
+                    <div class="priority-indicator"
+                         [style.color]="getPriorityColor(selectedItem.priority)">
+                        <i [class]="getPriorityIcon(selectedItem.priority)"></i>
+                        {{selectedItem.priority | titlecase}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="detail-section">
+            <h6>Progress & Timeline</h6>
+            <div class="progress-section">
+                <p-progressBar [value]="selectedItem.progress"
+                               [showValue]="true"
+                               styleClass="custom-progress">
+                </p-progressBar>
+                <div class="timeline-info">
+                    <span class="due-date"
+                          [ngClass]="{'urgent': getDaysRemaining(selectedItem.dueDate) <= 3}">
+                        Due: {{selectedItem.dueDate | date}}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="detail-section">
+            <h6>Description</h6>
+            <p class="description">{{selectedItem.description}}</p>
+        </div>
+
+        <div class="detail-section">
+            <h6>Tags</h6>
+            <div class="tags">
+                <p-chip *ngFor="let tag of selectedItem.tags"
+                        [label]="tag"
+                        styleClass="custom-chip">
+                </p-chip>
+            </div>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <div class="dialog-footer">
+            <p-button label="Close"
+                      icon="pi pi-times"
+                      styleClass="p-button-text"
+                      (click)="displayDialog = false">
+            </p-button>
+        </div>
+    </ng-template>
+</p-dialog>
+
+<!-- Confirmations -->
+<p-confirmDialog [style]="{width: '450px'}" styleClass="custom-confirm-dialog"></p-confirmDialog>
+
+<!-- Toast -->
+<p-toast></p-toast>

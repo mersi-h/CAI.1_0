@@ -1,0 +1,111 @@
+<!--<div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">-->
+<!--    <div class="flex flex-column align-items-center justify-content-center">-->
+<!--        <img src="assets/demo/images/aadf/327133655_545051357589312_1350158626456850721_n.webp" alt="Sakai logo" class="mb-5 w-6rem flex-shrink-0">-->
+<!--        <div style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(&#45;&#45;primary-color) 10%, rgba(33, 150, 243, 0) 30%);">-->
+<!--            <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">-->
+<!--                <div class="text-center mb-5">-->
+<!--                    <span class="text-600 font-medium">Sign in to continue</span>-->
+<!--                </div>-->
+
+<!--                <div>-->
+<!--                    <label for="email1" class="block text-900 text-xl font-medium mb-2">Username</label>-->
+<!--                    <input id="email1" type="text" [(ngModel)]="logIn.username" placeholder="Username" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">-->
+
+<!--                    <label for="password1" class="block text-900 font-medium text-xl mb-2">Password</label>-->
+<!--                    <p-password id="password1" [(ngModel)]="logIn.password" placeholder="Password" [toggleMask]="true" styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem"></p-password>-->
+
+<!--                    <div class="flex align-items-center justify-content-between mb-5 gap-5">-->
+<!--                        <div class="flex align-items-center">-->
+<!--                            <p-checkbox id="rememberme1" [binary]="true" styleClass="mr-2"></p-checkbox>-->
+<!--                            <label for="rememberme1">Remember me</label>-->
+<!--                        </div>-->
+<!--                        <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(&#45;&#45;primary-color)">Forgot password?</a>-->
+<!--                    </div>-->
+<!--                    <button pButton pRipple (click)="onSignIn()" label="Sign In" class="w-full p-3 text-xl" [routerLink]="['/']"></button>-->
+
+<!--                    <div class="flex align-items-center justify-content-center mb-5 gap-5 mt-5">-->
+<!--                        <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(&#45;&#45;primary-color)" (click)="redirectToRegister()">Continue to Register</a>-->
+<!--                    </div>-->
+
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+
+<div class="login-container surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+    <div class="animated-background"></div>
+    <div class="flex flex-column align-items-center justify-content-center position-relative">
+
+        <div class="logo-wrapper mb-5">
+            <img src="assets/demo/images/aadf/327133655_545051357589312_1350158626456850721_n.webp"
+                 alt="Sakai logo"
+                 class="logo-image">
+        </div>
+
+
+        <!-- Login Card with enhanced styling -->
+        <div class="login-card-wrapper">
+            <div class="w-full surface-card py-5 px-5">
+                <div class="text-center mb-5">
+                    <h1 class="title-text">Welcome Back</h1>
+                    <span class="subtitle-text color-white">Sign in to continue</span>
+                </div>
+
+                <div class="form-container">
+                    <div class="input-wrapper">
+                        <label for="username" class="block color-white text-xl font-medium mb-2">Username</label>
+                        <div class="input-group">
+                            <input id="username"
+                                   type="text"
+                                   [(ngModel)]="logIn.username"
+                                   placeholder="Username"
+                                   pInputText
+                                   class="w-full md:w-30rem">
+                        </div>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="password1" class="block color-white text-xl font-medium mb-2">Password</label>
+                        <div class="input-group">
+                            <input id="password1"
+                                   type="password"
+                                   [(ngModel)]="logIn.password"
+                                   placeholder="Password"
+                                   pInputText
+                                   class="w-full md:w-30rem p-3 pl-5">
+                        </div>
+                    </div>
+
+                    <div class="flex align-items-center justify-content-between mb-5 gap-5">
+                        <div class="flex align-items-center">
+                            <p-checkbox id="rememberme1"
+                                        [binary]="true"
+                                        styleClass="mr-2">
+                            </p-checkbox>
+                            <label for="rememberme1" class="remember-text">Remember me</label>
+                        </div>
+                        <a class="forgot-link">Forgot password?</a>
+                    </div>
+
+                    <button pButton
+                            pRipple
+                            (click)="onSignIn()"
+                            label="Sign In"
+                            class="login-button w-full p-3 text-xl">
+                    </button>
+
+                    <div class="flex align-items-center justify-content-center gap-5 mt-5">
+                        <a class="register-link"
+                           (click)="redirectToRegister()">
+                            New here? Create an account
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

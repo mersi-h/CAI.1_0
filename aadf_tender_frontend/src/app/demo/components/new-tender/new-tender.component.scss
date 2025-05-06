@@ -1,0 +1,176 @@
+@import 'primeng/resources/themes/lara-light-blue/theme.css';
+@import 'primeng/resources/primeng.min.css';
+@import 'primeicons/primeicons.css';
+
+$primary-blue: #1e88e5;
+$secondary-blue: #42a5f5;
+$primary-pink: #e91e63;
+$secondary-pink: #f48fb1;
+$primary-purple: #9c27b0;
+$secondary-purple: #ba68c8;
+$text-primary: #212121;
+$text-secondary: #757575;
+$card-background: #ffffff;
+$border-color: #e0e0e0;
+
+.new-tender-container {
+  padding: 1.5rem;
+}
+
+.card {
+  background-color: $card-background;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  padding: 1.5rem;
+}
+
+h5 {
+  color: $text-primary;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  label {
+    color: $text-secondary;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  input.form-control, textarea.form-control, p-dropdown, p-chips, p-listbox {
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    padding: 0.75rem;
+    width: 100%;
+    font-size: 1rem;
+    &:focus {
+      outline: none;
+      border-color: $primary-blue;
+      box-shadow: 0 0 0 0.2rem rgba($primary-blue, 0.25);
+    }
+  }
+  textarea.form-control {
+    resize: vertical;
+  }
+}
+
+p-dropdown {
+  &::ng-deep .p-dropdown-label {
+    color: $text-primary;
+  }
+  &::ng-deep .p-dropdown-trigger {
+    background-color: $card-background;
+    border-left: 1px solid $border-color;
+  }
+}
+
+p-chips {
+  &::ng-deep .p-chips-input-token {
+    color: $text-primary;
+  }
+  &::ng-deep .p-chips-token {
+    background-color: $secondary-blue;
+    color: white;
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    margin-right: 0.25rem;
+  }
+  &::ng-deep .p-chips-token-icon {
+    color: white;
+    margin-left: 0.25rem;
+    cursor: pointer;
+  }
+}
+
+p-listbox {
+  &::ng-deep .p-listbox-item {
+    padding: 0.75rem;
+    border-bottom: 1px solid $border-color;
+    color: $text-primary;
+    &:last-child {
+      border-bottom: none;
+    }
+    &:hover {
+      background-color: rgba($primary-blue, 0.05);
+      color: $text-primary;
+    }
+    &.p-highlight {
+      background-color: rgba($primary-blue, 0.15);
+      color: $text-primary;
+    }
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2rem;
+  button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+.alert-info{
+  background-color: rgba($primary-blue, 0.1);
+  color: $primary-blue;
+  border: 1px solid rgba($primary-blue, 0.3);
+  padding: 1rem;
+  border-radius: 4px;
+  strong{
+    font-weight: 500;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  ul{
+    list-style-position: inside;
+    padding-left: 0;
+  }
+  li{
+    margin-bottom: 0.25rem;
+  }
+}
+
+::ng-deep .p-chips {
+  border: none !important;
+  box-shadow: none !important;
+
+  .p-inputtext {
+    border: none !important;
+    box-shadow: none !important;
+  }
+}
+::ng-deep .p-dropdown {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+::ng-deep .p-dropdown .p-inputtext {
+  border: none !important;
+  box-shadow: none !important;
+}
+.form-row {
+  display: flex;
+  flex-wrap: nowrap; // force single line
+  gap: 4rem;
+}
+
+.form-group {
+  margin: 0; // remove any margin that pushes them apart
+}
+
+.p-listbox {
+  border: none;         /* Removes the border */
+  outline: none;        /* Removes the outline */
+}
+
+/* Optional: If you want to remove the focus outline as well */
+.p-listbox:focus {
+  outline: none;
+}
+
+label {
+  font-weight: bold;
+  color: #3d3d3d !important;
+}

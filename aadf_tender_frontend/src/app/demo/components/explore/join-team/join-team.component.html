@@ -1,0 +1,207 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <p-dataView #dv [value]="users" [paginator]="true" [rows]="9" filterBy="name" [sortField]="sortField"
+                        [sortOrder]="sortOrder" layout="grid">
+                <ng-template pTemplate="header">
+                    <div class="flex flex-column md:flex-row md:justify-content-between gap-2">
+                        <p-dropdown [options]="sortOptions"
+                                    placeholder="Sort By Price"
+                                    (onChange)="onSortChange($event)">
+                        </p-dropdown>
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input type="search" pInputText placeholder="Search by Username"
+                                   (input)="onFilter(dv, $event)">
+                        </span>
+                        <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                    </div>
+                </ng-template>
+
+                <ng-template let-products pTemplate="listItem">
+                    <div class="col-12" *ngFor="let product of products">
+                        <div class="flex flex-column md:flex-row align-items-center p-3 w-full">
+                            <img src="assets/demo/images/teams/9322434.png"
+                                 class="my-4 md:my-0 w-9 md:w-10rem shadow-2 mr-5"/>
+                            <div class="flex-1 flex flex-column align-items-center text-center md:text-left">
+                                <div class="font-bold text-2xl">{{product.name}}</div>
+                                <div class="mb-2">There are {{c}} available spots. </div>
+                                <button *ngIf="role == 'user' " pButton type="button" label="Request to join"></button>
+                                <button *ngIf="role == 'admin' " pButton type="button" label="Request as cofounder"></button>
+
+                                <div class="flex align-items-center mt-2">
+                                    <i class="pi pi-tag mr-2"></i>
+                                    <span class="font-semibold">{{product.category}}</span>
+                                </div>
+                            </div>
+                            <div
+                                class="flex flex-row md:flex-column justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0">
+                                <span
+                                    class="text-2xl font-semibold mb-2 align-self-center md:align-self-end">${{product.price}}</span>
+                                <p-button icon="pi pi-shopping-cart" label="Add to Cart"
+                                          [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"
+                                          styleClass="mb-2 p-button-sm"></p-button>
+                                <span
+                                    [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+
+                <ng-template let-products pTemplate="gridItem">
+                    <div class="grid grid-nogutter">
+                        <div class="col-12 md:col-4" *ngFor="let product of products">
+                            <div class="card m-3 border-1 surface-border">
+                                <div class="flex flex-column align-items-center text-center mb-3">
+                                    <img src="assets/demo/images/teams/9322434.png"
+                                         class="my-4 md:my-0 w-9 md:w-10rem shadow-2 mr-5"/>
+                                    <div class="text-2xl font-bold p-3">{{product.name}}</div>
+                                    <div class="mb-2">There are {{c}} available spots. </div>
+                                    <button *ngIf="role == 'user' " pButton type="button" label="Request to join"></button>
+                                    <button *ngIf="role == 'admin' " pButton type="button" label="Request as cofounder"></button>
+
+                                </div>
+                                <div class="flex align-items-center justify-content-between">
+                                    <span class="text-2xl font-semibold">{{product.price}} members</span>
+                                    <p-button icon="pi pi-eye" (click)="viewMembers()"></p-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-dataView>
+        </div>
+    </div>
+</div>
+
+<p-dialog header="Team"
+          [(visible)]="displayDialog"
+          [modal]="true"
+          showEffect="fade"
+          style="width: 50vw; height: 50vw"
+          [breakpoints]="{'960px': '75vw'}">
+    <p-table #dt1
+             [value]="users"
+             dataKey="id"
+             [rows]="5"
+             [paginator]="true"
+             [rowHover]="true"
+             styleClass="p-datatable-gridlines"
+             [globalFilterFields]="['name','country.name','representative.name','status']"
+             responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="min-width: 12rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Name
+                        <p-columnFilter type="text" field="name" display="menu"
+                                        placeholder="Search by name"></p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width: 12rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Age
+                        <p-columnFilter type="text" field="country.name" display="menu"
+                                        placeholder="Search by country"></p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width: 14rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Gender
+                        <p-columnFilter field="representative" matchMode="in" display="menu" [showMatchModes]="false"
+                                        [showOperator]="false" [showAddButton]="false">
+                            <ng-template pTemplate="header">
+                                <div class="px-3 pt-3 pb-0">
+                                    <span class="font-bold">Agent Picker</span>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any"
+                                               (onChange)="filter($event.value)" optionLabel="name">
+                                    <ng-template let-option pTemplate="item">
+                                        <div class="p-multiselect-representative-option">
+                                            <img [alt]="option.label" src="assets/demo/images/avatar/{{option.image}}"
+                                                 width="32" style="vertical-align: middle"/>
+                                            <span class="ml-2">{{option.name}}</span>
+                                        </div>
+                                    </ng-template>
+                                </p-multiSelect>
+                            </ng-template>
+                        </p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width: 10rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Qualification
+                        <p-columnFilter type="date" field="date" display="menu"
+                                        placeholder="mm/dd/yyyy"></p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width: 10rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Location
+                        <p-columnFilter type="numeric" field="balance" display="menu" currency="USD"></p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width: 12rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Professional Details
+                        <p-columnFilter field="status" matchMode="equals" display="menu">
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)"
+                                            placeholder="Any" [style]="{'min-width': '12rem'}">
+                                    <ng-template let-option pTemplate="item">
+                                        <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
+                                    </ng-template>
+                                </p-dropdown>
+                            </ng-template>
+                        </p-columnFilter>
+                    </div>
+                </th>
+                <th style="min-width: 9rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Rate
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-customer>
+            <tr>
+                <td>
+                    {{customer.name}}
+                </td>
+                <td>
+
+                </td>
+                <td>
+
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td class="text-center">
+                    <div style="display: flex; width: 100%; justify-content: space-between;">
+                        <button pButton
+                                pRipple
+                                type="button"
+                                icon="pi pi-thumbs-up"
+                                class="p-button-rounded p-button-success">
+                        </button>
+                        <button pButton
+                                pRipple
+                                type="button"
+                                icon="pi pi-thumbs-down"
+                                class="p-button-rounded p-button-danger">
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <div style="display: flex; justify-content: end; width: 100%">
+        <button pButton pRipple type="button" label="Join Team" class="p-button-raised p-button-success"></button>
+    </div>
+</p-dialog>

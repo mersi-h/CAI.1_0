@@ -1,0 +1,51 @@
+<button
+        pButton
+        icon="pi pi-comments"
+        class="p-button-rounded p-button-info chat-toggle-button"
+        (click)="toggleChatbot()">
+</button>
+
+<p-sidebar [(visible)]="visible" position="right" styleClass="chat-sidebar" [showCloseIcon]="false" [baseZIndex]="1000">
+    <div class="chat-header">
+        <div class="chat-title">
+            <p-avatar icon="pi pi-robot" styleClass="mr-2" [style]="{'background-color': '#2196F3', 'color': '#ffffff'}"></p-avatar>
+            <h3>AI Assistant</h3>
+        </div>
+        <button pButton icon="pi pi-times" class="p-button-rounded p-button-text" (click)="toggleChatbot()"></button>
+    </div>
+
+    <div class="chat-messages" #chatContainer>
+        <div *ngFor="let msg of messages" class="message-container" [ngClass]="{'user-message': msg.sender === 'user', 'bot-message': msg.sender === 'bot'}">
+            <div class="message-content">
+                <div class="message-text">{{ msg.text }}</div>
+                <div class="message-time">{{ msg.timestamp | date:'shortTime' }}</div>
+            </div>
+        </div>
+        <div *ngIf="loading" class="bot-message">
+            <div class="message-content">
+                <div class="typing-indicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-input">
+        <input
+                type="text"
+                pInputText
+                [(ngModel)]="newMessage"
+                placeholder="Type your message..."
+                (keyup)="handleKeyPress($event)"
+                [disabled]="loading">
+        <button
+                pButton
+                icon="pi pi-send"
+                class="p-button-rounded"
+                [disabled]="!newMessage.trim() || loading"
+                (click)="sendMessage()">
+        </button>
+    </div>
+</p-sidebar>

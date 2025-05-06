@@ -1,0 +1,357 @@
+<!-- active-tenders.component.html -->
+<div class="grid">
+    <div class="col-12">
+        <div class="card" [@fadeInOut]>
+            <!-- Header Section -->
+            <div class="tender-header">
+                <div class="title-section">
+                    <h5>Active Tenders</h5>
+                    <p-tag [value]="tenders.length + ' Active'"
+                           severity="success"
+                           styleClass="tender-count">
+                    </p-tag>
+                </div>
+                <div class="header-actions">
+                    <button pButton
+                            label="Analytics"
+                            icon="pi pi-chart-bar"
+                            (click)="showAnalytics()"
+                            class="p-button-outlined mr-2">
+                    </button>
+                    <button pButton
+                            label="Export"
+                            icon="pi pi-file-excel"
+                            (click)="exportToExcel()"
+                            class="p-button-outlined p-button-success">
+                    </button>
+                </div>
+            </div>
+
+            <!-- Advanced Filters -->
+            <p-accordion>
+                <p-accordionTab header="Advanced Filters" [selected]="true">
+                    <div class="grid">
+                        <div class="col-12 md:col-3">
+                            <span class="p-float-label">
+                                <input pInputText
+                                       id="search"
+                                       [(ngModel)]="searchTerm"
+                                       class="w-full" />
+                                <label for="search">Search Tenders</label>
+                            </span>
+                        </div>
+
+                        <div class="col-12 md:col-3">
+                            <p-dropdown [options]="categories"
+                                        [(ngModel)]="selectedCategory"
+                                        optionLabel="label"
+                                        [style]="{'width':'100%'}"
+                                        placeholder="Select Category">
+                            </p-dropdown>
+                        </div>
+
+                        <div class="col-12 md:col-3">
+                            <p-dropdown [options]="statuses"
+                                        [(ngModel)]="selectedStatus"
+                                        optionLabel="label"
+                                        [style]="{'width':'100%'}"
+                                        placeholder="Select Status">
+                            </p-dropdown>
+                        </div>
+
+                        <div class="col-12 md:col-3">
+                            <p-calendar [(ngModel)]="dateRange"
+                                        selectionMode="range"
+                                        [style]="{'width':'100%'}"
+                                        placeholder="Select Date Range"
+                                        [showButtonBar]="true">
+                            </p-calendar>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="block mb-2">Budget Range</label>
+                            <p-slider [(ngModel)]="budgetRange"
+                                      [range]="true"
+                                      [min]="0"
+                                      [max]="1000000"
+                                      [step]="10000">
+                            </p-slider>
+                            <div class="flex justify-content-between mt-2">
+                                <span>{{budgetRange[0] | currency}}</span>
+                                <span>{{budgetRange[1] | currency}}</span>
+                            </div>
+                        </div>
+
+                        <div class="col-12 flex justify-content-end">
+                            <button pButton
+                                    label="Reset"
+                                    icon="pi pi-refresh"
+                                    (click)="resetFilters()"
+                                    class="p-button-outlined mr-2">
+                            </button>
+                            <button pButton
+                                    label="Apply Filters"
+                                    icon="pi pi-search"
+                                    (click)="applyFilters()">
+                            </button>
+                        </div>
+                    </div>
+                </p-accordionTab>
+            </p-accordion>
+
+            <!-- Tenders Table -->
+            <p-table [value]="tenders"
+                     [loading]="loading"
+                     styleClass="p-datatable-striped p-datatable-gridlines p-datatable-sm"
+                     [scrollable]="true"
+                     responsiveLayout="scroll">
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="min-width: 300px">Tender Details</th>
+                        <th style="min-width: 150px">Category</th>
+                        <th style="min-width: 150px">Budget</th>
+                        <th style="min-width: 200px">Timeline</th>
+                        <th style="min-width: 150px">Progress</th>
+                        <th style="min-width: 150px">Status</th>
+                        <th style="min-width: 100px">Actions</th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-tender>
+                    <tr class="tender-row" (click)="showTenderDetails(tender)">
+                        <td>
+                            <div class="tender-info">
+                                <div class="tender-title">{{tender.title}}</div>
+                                <div class="tender-meta">
+                                    <span class="tender-id">{{tender.id}}</span>
+                                    <span class="tender-participants">
+                                        <i class="pi pi-users"></i>
+                                        {{tender.participants}} Participants
+                                    </span>
+                                </div>
+                                <div class="tender-tags">
+                                    <p-chip *ngFor="let tag of tender.tags.slice(0, 2)"
+                                            [label]="tag"
+                                            styleClass="tender-tag">
+                                    </p-chip>
+                                    <span *ngIf="tender.tags.length > 2"
+                                          class="more-tags">
+                                        +{{tender.tags.length - 2}}
+                                    </span>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <span class="category-badge"
+                                  [ngClass]="tender.category.toLowerCase().replace(' ', '-')">
+                                {{tender.category}}
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="budget-info">
+                                <span class="budget-amount">{{tender.budget | currency}}</span>
+                                <span class="budget-avg" *ngIf="tender.engagement.averageBid">
+                                    Avg. Bid: {{tender.engagement.averageBid | currency}}
+                                </span>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="timeline-info">
+                                <div class="date-range">
+                                    <i class="pi pi-calendar"></i>
+                                    <span>{{tender.startDate | date}} - {{tender.endDate | date}}</span>
+                                </div>
+                                <div class="days-remaining"
+                                     [ngClass]="{'urgent': getDaysRemaining(tender.endDate) <= 5}">
+                                    {{getDaysRemaining(tender.endDate)}} days remaining
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="progress-info">
+                                <p-progressBar [value]="tender.progress"
+                                               [showValue]="false"
+                                               [style]="{'height': '8px'}">
+                                </p-progressBar>
+                                <span class="progress-text">{{tender.progress}}% Complete</span>
+                            </div>
+                        </td>
+
+                        <td>
+                            <p-tag [value]="tender.status | titlecase"
+                                   [severity]="getStatusSeverity(tender.status)">
+                            </p-tag>
+                        </td>
+
+                        <td>
+                            <div class="action-buttons">
+                                <button pButton
+                                        icon="pi pi-heart"
+                                        class="p-button-rounded p-button-text p-button-danger"
+                                        (click)="toggleFavorite(tender, $event)"
+                                        pTooltip="Add to Favorites">
+                                </button>
+                                <button pButton
+                                        icon="pi pi-eye"
+                                        class="p-button-rounded p-button-text"
+                                        pTooltip="View Details">
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="7">
+                            <div class="empty-message">
+                                <i class="pi pi-inbox empty-icon"></i>
+                                <h3>No Active Tenders</h3>
+                                <p>There are no active tenders matching your criteria.</p>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+
+<!-- Tender Details Dialog -->
+<p-dialog [(visible)]="displayDetailDialog"
+          [header]="selectedTender?.title || ''"
+          [modal]="true"
+          [style]="{width: '80vw'}"
+          [draggable]="false"
+          [resizable]="false"
+          styleClass="tender-detail-dialog">
+
+    <div class="tender-details" *ngIf="selectedTender">
+        <p-tabView>
+            <!-- Overview Tab -->
+            <p-tabPanel header="Overview">
+                <div class="grid">
+                    <div class="col-12 md:col-8">
+                        <div class="detail-section">
+                            <h6>Description</h6>
+                            <p>{{selectedTender.description}}</p>
+                        </div>
+
+                        <div class="detail-section">
+                            <h6>Requirements</h6>
+                            <ul class="requirement-list">
+                                <li *ngFor="let req of selectedTender.requirements">
+                                    <i class="pi pi-check-circle"></i>
+                                    {{req}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-4">
+                        <div class="tender-stats">
+                            <div class="stat-card">
+                                <span class="stat-label">Views</span>
+                                <span class="stat-value">{{selectedTender.engagement.views}}</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Applications</span>
+                                <span class="stat-value">{{selectedTender.engagement.applications}}</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Questions</span>
+                                <span class="stat-value">{{selectedTender.engagement.questions}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </p-tabPanel>
+
+            <!-- Documents Tab -->
+            <p-tabPanel header="Documents">
+                <p-table [value]="selectedTender.documents" styleClass="document-table">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Document Name</th>
+                            <th>Type</th>
+                            <th>Size</th>
+                            <th>Upload Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-doc>
+                        <tr>
+                            <td>{{doc.name}}</td>
+                            <td>
+                                <p-tag [value]="doc.type"
+                                       severity="info">
+                                </p-tag>
+                            </td>
+                            <td>{{doc.size}}</td>
+                            <td>{{doc.uploadDate | date}}</td>
+                            <td>
+                                <button pButton
+                                        icon="pi pi-download"
+                                        class="p-button-sm"
+                                        (click)="downloadDocument(doc)">
+                                </button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </p-tabPanel>
+
+            <!-- Timeline Tab -->
+            <p-tabPanel header="Timeline">
+                <p-timeline [value]="selectedTender.keyDates"
+                            align="alternate">
+                    <ng-template pTemplate="content" let-event>
+                        <div class="timeline-event"
+                             [ngClass]="{'completed': event.completed}">
+                            <h6>{{event.event}}</h6>
+                            <p>{{event.date | date}}</p>
+                        </div>
+                    </ng-template>
+                </p-timeline>
+            </p-tabPanel>
+        </p-tabView>
+    </div>
+</p-dialog>
+
+<!-- Analytics Dialog -->
+<p-dialog [(visible)]="displayAnalyticsDialog"
+          header="Tender Analytics"
+          [modal]="true"
+          [style]="{width: '80vw'}"
+          [draggable]="false"
+          [resizable]="false"
+          styleClass="analytics-dialog">
+
+    <div class="grid">
+        <div class="col-12 md:col-6">
+            <p-card header="Participation Trend">
+                <p-chart type="line"
+                         [data]="analyticsData.participationTrend"
+                         [options]="chartOptions">
+                </p-chart>
+            </p-card>
+        </div>
+
+        <div class="col-12 md:col-6">
+            <p-card header="Budget Distribution">
+                <p-chart type="doughnut"
+                         [data]="analyticsData.budgetDistribution"
+                         [options]="chartOptions">
+                </p-chart>
+            </p-card>
+        </div>
+    </div>
+</p-dialog>
+
+<!-- Toast -->
+<p-toast></p-toast>

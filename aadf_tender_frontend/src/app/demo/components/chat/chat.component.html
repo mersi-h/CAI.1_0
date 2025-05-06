@@ -1,0 +1,54 @@
+<div class="chat-widget-container" [ngClass]="{'expanded': isExpanded}">
+    <!-- Chat Icon Button -->
+    <div class="chat-icon" (click)="toggleChat()" *ngIf="!isExpanded">
+        <i class="chat-icon-symbol">💬</i>
+    </div>
+
+    <!-- Full Chat Interface -->
+    <div class="chat-container" *ngIf="isExpanded">
+        <div class="header">
+            <h2>AI Assistant</h2>
+            <button class="minimize-button" (click)="toggleChat()">
+                <span>—</span>
+            </button>
+        </div>
+
+        <div class="messages-container">
+            <div class="message-list" #scrollContainer>
+                <div *ngFor="let msg of messages"
+                     class="message-item"
+                     [ngClass]="{'user-message': msg.sender === 'user', 'ai-message': msg.sender === 'ai'}">
+                    <div class="message-content">
+                        <div class="message-sender">{{ msg.sender === 'user' ? 'You' : 'AI Assistant' }}</div>
+                        <div class="message-text">{{ msg.text }}</div>
+                        <div class="message-time">{{ msg.timestamp | date:'short' }}</div>
+                    </div>
+                </div>
+                <div *ngIf="loading" class="typing-indicator">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <form (ngSubmit)="sendMessage()">
+                <div class="input-group">
+                    <input
+                            type="text"
+                            [(ngModel)]="currentMessage"
+                            name="message"
+                            placeholder="Type a message..."
+                            autocomplete="off"
+                            [disabled]="loading"
+                    >
+                    <button type="submit" [disabled]="!currentMessage.trim() || loading">
+                        <span *ngIf="!loading">Send</span>
+                        <span *ngIf="loading">...</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

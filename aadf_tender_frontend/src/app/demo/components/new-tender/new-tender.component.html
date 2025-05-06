@@ -1,0 +1,189 @@
+<div class="new-tender-container" style="width: 100%">
+    <div class="card">
+        <div class="mt-4">
+            <p-steps [model]="steps" [readonly]="true" [activeIndex]="activeStepIndex"></p-steps>
+            <div [style.height]="divHeight" style="overflow-y: scroll; overflow-x: hidden" [ngSwitch]="activeStepIndex"
+                 class="mt-4">
+                <div *ngSwitchCase="0">
+                    <div class="form-row mt-2" style="width: 100%">
+                    <div class="form-group" style="width: 90%">
+                        <label for="tenderId">Subject *</label>
+                        <input type="text" id="tenderId" class="form-control" [(ngModel)]="tender.subject">
+                    </div>
+                    <div class="form-group" style="width: 10%">
+                        <label>Active</label>
+                        <p-inputSwitch [(ngModel)]="tender.published" />
+                    </div>
+                    </div>
+                    <div class="form-row mt-2" style="width: 100%">
+                        <div class="form-group" style="width: 40%">
+                            <label>Scope of Works *</label>
+                            <input type="text" class="form-control" [(ngModel)]="tender.scope">
+                        </div>
+                        <div class="form-group" style="width: 30%">
+                            <label>Subcontracting</label>
+                            <p-dropdown [options]="subcontractingLst" [(ngModel)]="tender.subcontracting" optionLabel="name"
+                                        [style]="{'width':'100%'}"></p-dropdown>
+                        </div>
+                        <div class="form-group" style="width: 30%">
+                            <label>Joint Ventures</label>
+                            <p-dropdown [options]="subcontractingLst" [(ngModel)]="tender.jointVentures" optionLabel="name"
+                                        [style]="{'width':'100%'}"></p-dropdown>
+                        </div>
+                    </div>
+                    <div class="form-row mt-2" style="width: 100%">
+                        <div class="form-group" style="width: 40%">
+                            <label>Progress Payments *</label>
+                            <input type="text" class="form-control" [(ngModel)]="tender.progressPayments">
+                        </div>
+                        <div class="form-group" style="width: 30%">
+                            <label>Site visit</label>
+                            <input type="text" class="form-control" [(ngModel)]="tender.siteVisit">
+                        </div>
+                        <div class="form-group" style="width: 30%">
+                            <label>Number of Bids Allowed</label>
+                            <div style="width: 100%">
+                                <p-inputNumber
+                                        [(ngModel)]="tender.numBidsAllowed"
+                                        inputId="minmax"
+                                        mode="decimal"
+                                        [style]="{'width' : '100%'}"
+                                        [min]="0"
+                                        [showButtons]="true"
+                                        class="form-control"
+                                        [max]="3"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row mt-2" style="width: 100%">
+                        <div class="form-group" style="width: 40%">
+                            <label>Bid Opening *</label>
+                            <p-calendar id="data-valid"
+                                        dateFormat="dd/mm/yy"
+                                        placeholder="dd/mm/yyyy"
+                                        [(ngModel)]="tender.bidOpen"
+                                        libDateInputChange appendTo="body"
+                                        baseZIndex="99999999"
+                                        [style]="{'width' : '100%'}" firstDayOfWeek="1"
+                                        [showOnFocus]="false" [showIcon]="true" [tabindex]="1">
+                            </p-calendar>
+                        </div>
+                        <div class="form-group" style="width: 30%">
+                            <label>Deadline for applications *</label>
+                            <p-calendar
+                                    dateFormat="dd/mm/yy"
+                                    placeholder="dd/mm/yyyy"
+                                    [(ngModel)]="tender.deadline"
+                                    libDateInputChange appendTo="body"
+                                    baseZIndex="99999999"
+                                    [style]="{'width' : '100%'}" firstDayOfWeek="1"
+                                    [showOnFocus]="false" [showIcon]="true" [tabindex]="1">
+                            </p-calendar>
+                        </div>
+                        <div class="form-group" style="width: 30%">
+                            <label>Ceiling Fund *</label>
+                            <div style="width: 100%">
+                                <p-inputNumber
+                                        [(ngModel)]="tender.ceilingFund"
+                                        inputId="ceiling-fund"
+                                        mode="decimal"
+                                        [minFractionDigits]="2"
+                                        [maxFractionDigits]="2"
+                                        [prefix]="'$'"
+                                        [currency]="'USD'"
+                                        [style]="{'width':'100%'}"
+                                        [min]="0"
+                                        [max]="1000000"
+                                        [showButtons]="true"
+                                        class="form-control">
+                                </p-inputNumber>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-2">
+                        <label for="description">Project Description *</label>
+                        <textarea id="description" class="form-control" rows="10"
+                                  [(ngModel)]="tender.description"></textarea>
+                    </div>
+                    <div class="form-group mt-2">
+                        <label>Area</label>
+                        <p-listbox [options]="challengeAreas" [(ngModel)]="tender.area" [multiple]="false"
+                                   optionLabel="name" [style]="{'width':'100%'}"></p-listbox>
+                    </div>
+                    <div class="alert alert-info" role="alert">
+                        <strong>Keep in mind</strong>
+                        <ul class="list-unstyled">
+                            <li> Be specific about requirements to ensure clarity and accuracy.</li>
+                            <li> Be specific about requirements to ensure clarity and accuracy.</li>
+                            <li> Include contact information for further inquiries or clarifications.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div *ngSwitchCase="1">
+                    <div class="form-group mt-2">
+                        <label>Core Team Composition & Required Qualifications (incl. licenses if relevant) *</label>
+
+                        <div style="display: flex; justify-content: end;" class="mb-2">
+                            <button pButton type="button" label="Add Position" icon="pi pi-plus" class="mt-2"
+                                    (click)="addQualification()"></button>
+                        </div>
+                        <div *ngFor="let qualification of tender.qualifications; let i = index"
+                             class="qualification-item mb-2 p-2" style="border: 1px solid #ddd; border-radius: 8px;">
+                            <div class="form-row" style="display: flex; gap: 10px;">
+                                <div style="flex: 1;">
+                                    <label>Position</label>
+                                    <input pInputText [(ngModel)]="qualification.position"
+                                           placeholder="e.g., Project Manager" class="form-control"/>
+                                </div>
+                                <div style="flex: 2;">
+                                    <label>Note</label>
+                                    <input pInputText [(ngModel)]="qualification.note"
+                                           placeholder="e.g., PMP license required" class="form-control"/>
+                                </div>
+                                <div style="display: flex; align-items: end;">
+                                    <button pButton icon="pi pi-trash" class="p-button-danger"
+                                            (click)="removeQualification(i)"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label for="description">Experience of the company *</label>
+                        <textarea class="form-control" rows="10"
+                                  [(ngModel)]="tender.companyExperience"></textarea>
+                        <small class="form-text text-muted">Required a minimum of three contracts for similar design
+                            projects. A maximum of five contracts will be accepted and evaluated.</small>
+                    </div>
+
+                    <div class="alert alert-info mt-3" role="alert">
+                        <strong> Qualifying Criteria </strong>
+                        <ul class="list-unstyled">
+                            <li> Business Registered in Albania.</li>
+                            <li> Licenses as per requirements in 1.18 above.</li>
+                            <li> Three similar contracts as per requirements in 1.16 above.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="form-actions" style="display: flex; justify-content: space-between;">
+            <button pButton type="button" label="<<" (click)="previousStep()"
+                    [disabled]="activeStepIndex === 0"></button>
+
+            <button pButton
+                    type="button"
+                    [label]="activeStepIndex === 1 ? 'Save' : 'Next'"
+                    [icon]="activeStepIndex === 1 ? 'pi pi-save' : null"
+                    (click)="activeStepIndex === 1 ? saveData() : nextStep()"
+                    [disabled]="isNextDisabled()"
+                    [style.background-color]="activeStepIndex === 1 ? 'green' : ''"
+                    [style.color]="activeStepIndex === 1 ? 'white' : ''">
+            </button>
+        </div>
+
+
+    </div>
+</div>

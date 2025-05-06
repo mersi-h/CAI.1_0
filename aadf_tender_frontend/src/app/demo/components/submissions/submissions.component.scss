@@ -1,0 +1,20 @@
+/* styles.css */
+.filter-summary {
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  padding: 0.5rem;
+  margin-top: 1rem;
+}
+
+.submission-details label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.submission-details .text-500 {
+  color: var(--text-color-secondary);
+}
+
+.submission-details .text-900 {
+  color: var(--text-color);
+}

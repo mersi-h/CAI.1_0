@@ -1,0 +1,57 @@
+<div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+    <div class="col-12 align-items-center justify-content-center">
+        <div class="card card-w-title flex flex-wrap align-items-center justify-content-center">
+            <div class="col-12 h-full">
+                <h5>Steps</h5>
+                <p-steps [model]="routeItems" styleClass="mt-5" [readonly]="false"></p-steps>
+            </div>
+            <div class="col-12 md:col-4 mt-5 md:mt-0">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+        <div class="flex flex-column align-items-center justify-content-center">
+            <div style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
+                <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">
+                    <div class="text-center mb-5">
+                        <span class="text-600 font-medium">Sign Up</span>
+                    </div>
+
+                    <div>
+                        <label for="age" class="block text-900 text-xl font-medium mb-2">Age</label>
+                        <input id="age" type="number" [(ngModel)]="userInformation.age" placeholder="Age" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+
+                        <label for="gender" class="block text-900 text-xl font-medium mb-2">Gender</label>
+                        <input id="gender" type="text" [(ngModel)]="userInformation.gender" placeholder="Gender" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+
+                        <label for="qualification" class="block text-900 text-xl font-medium mb-2">Qualification</label>
+                        <input id="qualification" type="text" [(ngModel)]="userInformation.qualification" placeholder="Qualification" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+
+                        <label for="education" class="block text-900 text-xl font-medium mb-2">Education</label>
+                        <input id="education" type="text" [(ngModel)]="userInformation.education" placeholder="Education" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+
+                        <label for="profession" class="block text-900 font-medium text-xl mb-2">Profession</label>
+                        <input id="profession" type="text" [(ngModel)]="userInformation.profession" placeholder="Profession" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+
+                        <label for="position" class="block text-900 font-medium text-xl mb-2">Position</label>
+                        <input id="position" type="text" [(ngModel)]="userInformation.profession" placeholder="Position" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+
+                        <label for="company" class="block text-900 font-medium text-xl mb-2">Company</label>
+                        <input id="company" type="text" [(ngModel)]="userInformation.company" placeholder="Company" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+
+                        <label for="experience" class="block text-900 font-medium text-xl mb-2">Experience</label>
+                        <input id="experience" type="number" [(ngModel)]="userInformation.experience" placeholder="Experience" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+
+                        <label for="location" class="block text-900 font-medium text-xl mb-2">Location</label>
+                        <input id="location" type="text" [(ngModel)]="userInformation.location" placeholder="Location" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">
+
+                        <button pButton pRipple (click)="onRegister()" label="Register" class="w-full p-2 text-xl"></button>
+
+                        <div class="flex align-items-center justify-content-center mb-2 gap-5 mt-2">
+                            <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)" (click)="redirectToLogin()">Continue to Log In</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

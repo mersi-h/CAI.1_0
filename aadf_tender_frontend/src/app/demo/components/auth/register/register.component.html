@@ -1,0 +1,314 @@
+<!--<div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">-->
+<!--    <div class="col-12 align-items-center justify-content-center">-->
+<!--        <div class="card card-w-title flex flex-wrap align-items-center justify-content-center">-->
+<!--            <div class="col-12 md:col-4 mt-5 md:mt-0">-->
+<!--                <router-outlet></router-outlet>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <div class="flex flex-column align-items-center justify-content-center">-->
+<!--                <div style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(&#45;&#45;primary-color) 10%, rgba(33, 150, 243, 0) 30%);">-->
+<!--                    <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">-->
+<!--                        <div class="text-center mb-5">-->
+<!--                            <h2 class="text-900 text-2xl font-bold mb-2">Create an Account</h2>-->
+<!--                        </div>-->
+
+<!--                        <div>-->
+<!--                            <label for="firstName" class="block text-900 text-xl font-medium mb-2">First Name</label>-->
+<!--                            <input id="firstName" type="text" [(ngModel)]="register.firstName" placeholder="First Name"-->
+<!--                                   pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">-->
+
+<!--                            <label for="lastName" class="block text-900 text-xl font-medium mb-2">Last Name</label>-->
+<!--                            <input id="lastName" type="text" [(ngModel)]="register.lastName" placeholder="Last Name"-->
+<!--                                   pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">-->
+
+<!--                            <label for="email" class="block text-900 text-xl font-medium mb-2">Email</label>-->
+<!--                            <input id="email" type="email" [(ngModel)]="register.email" placeholder="Email address"-->
+<!--                                   pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">-->
+
+<!--                            <label for="username" class="block text-900 text-xl font-medium mb-2">Username</label>-->
+<!--                            <input id="username" type="text" [(ngModel)]="register.username" placeholder="Username"-->
+<!--                                   pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">-->
+
+<!--                            <label for="password" class="block text-900 font-medium text-xl mb-2">Password</label>-->
+<!--                            <p-password id="password" [(ngModel)]="register.password" placeholder="Password"-->
+<!--                                        [toggleMask]="true" styleClass="mb-5"-->
+<!--                                        inputStyleClass="w-full p-3 md:w-30rem"></p-password>-->
+
+<!--                            <div class="flex align-items-center justify-content-between mb-5 gap-5">-->
+<!--                                <div class="flex align-items-center">-->
+<!--                                    <p-checkbox id="rememberme1" [binary]="true" styleClass="mr-2"></p-checkbox>-->
+<!--                                    <label for="rememberme1">Remember me</label>-->
+<!--                                </div>-->
+<!--                                <a class="font-medium no-underline ml-2 text-right cursor-pointer"-->
+<!--                                   style="color: var(&#45;&#45;primary-color)">Forgot password?</a>-->
+<!--                            </div>-->
+
+<!--                            <button pButton pRipple (click)="onRegister()" label="Register"-->
+<!--                                    class="w-full p-3 text-xl"></button>-->
+
+<!--                            <div class="flex align-items-center justify-content-center mb-5 gap-5 mt-5">-->
+<!--                                <a class="font-medium no-underline ml-2 text-right cursor-pointer"-->
+<!--                                   style="color: var(&#45;&#45;primary-color)" (click)="redirectToLogin()">Continue to Log In</a>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash;        </ng-container>&ndash;&gt;-->
+
+<!--        <div *ngIf="registerStep ===2">-->
+<!--            <div class="flex flex-column align-items-center justify-content-center">-->
+<!--                <div-->
+<!--                        style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(&#45;&#45;primary-color) 10%, rgba(33, 150, 243, 0) 30%);">-->
+<!--                    <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">-->
+<!--                        <div class="text-center mb-5">-->
+<!--                            <span class="text-600 font-medium">Sign Up 2</span>-->
+<!--                        </div>-->
+
+<!--                        <div>-->
+<!--                            <label for="age" class="block text-900 text-xl font-medium mb-2">Age</label>-->
+<!--                            <input id="age" type="number" [(ngModel)]="userInformation.age" placeholder="Age" pInputText-->
+<!--                                   class="w-full md:w-30rem mb-5" style="padding:1rem">-->
+
+<!--                            <label for="gender" class="block text-900 text-xl font-medium mb-2">Gender</label>-->
+<!--                            <input id="gender" type="text" [(ngModel)]="userInformation.gender" placeholder="Gender"-->
+<!--                                   pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">-->
+
+<!--                            <label for="qualification"-->
+<!--                                   class="block text-900 text-xl font-medium mb-2">Qualification</label>-->
+<!--                            <input id="qualification" type="text" [(ngModel)]="userInformation.qualification"-->
+<!--                                   placeholder="Qualification" pInputText class="w-full md:w-30rem mb-5"-->
+<!--                                   style="padding:1rem">-->
+
+<!--                            <label for="education" class="block text-900 text-xl font-medium mb-2">Education</label>-->
+<!--                            <input id="education" type="text" [(ngModel)]="userInformation.education"-->
+<!--                                   placeholder="Education" pInputText class="w-full md:w-30rem mb-5"-->
+<!--                                   style="padding:1rem">-->
+
+<!--                            <label for="profession" class="block text-900 font-medium text-xl mb-2">Profession</label>-->
+<!--                            <input id="profession" type="text" [(ngModel)]="userInformation.profession"-->
+<!--                                   placeholder="Profession" pInputText class="w-full md:w-30rem mb-5"-->
+<!--                                   style="padding:1rem">-->
+
+<!--                            <label for="position" class="block text-900 font-medium text-xl mb-2">Position</label>-->
+<!--                            <input id="position" type="text" [(ngModel)]="userInformation.position"-->
+<!--                                   placeholder="Position" pInputText class="w-full md:w-30rem mb-5"-->
+<!--                                   style="padding:1rem">-->
+
+<!--                            <label for="company" class="block text-900 font-medium text-xl mb-2">Company</label>-->
+<!--                            <input id="company" type="text" [(ngModel)]="userInformation.company" placeholder="Company"-->
+<!--                                   pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">-->
+
+<!--                            <label for="experience" class="block text-900 font-medium text-xl mb-2">Experience</label>-->
+<!--                            <input id="experience" type="number" [(ngModel)]="userInformation.experience"-->
+<!--                                   placeholder="Experience" pInputText class="w-full md:w-30rem mb-5"-->
+<!--                                   style="padding:1rem">-->
+
+<!--                            <label for="location" class="block text-900 font-medium text-xl mb-2">Location</label>-->
+<!--                            <input id="location" type="text" [(ngModel)]="userInformation.location"-->
+<!--                                   placeholder="Location" pInputText class="w-full md:w-30rem mb-5"-->
+<!--                                   style="padding:1rem">-->
+
+<!--                            <button pButton pRipple (click)="onRegisterPart2()" label="Register"-->
+<!--                                    class="w-full p-2 text-xl"></button>-->
+
+<!--                            <div class="flex align-items-center justify-content-center mb-2 gap-5 mt-2">-->
+<!--                                <a class="font-medium no-underline ml-2 text-right cursor-pointer"-->
+<!--                                   style="color: var(&#45;&#45;primary-color)" (click)="redirectToLogin()">Continue to Log-->
+<!--                                    In</a>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash;        </ng-container>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;        <div class="flex flex-column align-items-center justify-content-center" *ngIf="registerStep===3">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div&ndash;&gt;-->
+<!--&lt;!&ndash;                    style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(&#45;&#45;primary-color) 10%, rgba(33, 150, 243, 0) 30%);">&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="text-center mb-5" style="display: flex; justify-content: space-between">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <span class="text-600 font-medium">Add Skills</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <button pButton icon="pi pi-plus" (click)="addSection()"></button>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                    <div>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <ng-container *ngFor="let s of sections">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <div style="border: 1px solid #6366F1;padding: 1em;margin-bottom: 30px;border-radius: 5%;">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <label for="type" class="block text-900 text-xl font-medium mb-2">Type</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <input id="type" type="text" [(ngModel)]="s.type" placeholder="Type" pInputText&ndash;&gt;-->
+<!--&lt;!&ndash;                                       class="w-full md:w-30rem mb-5" style="padding:1rem">&ndash;&gt;-->
+
+<!--&lt;!&ndash;                                <label for="experience1"&ndash;&gt;-->
+<!--&lt;!&ndash;                                       class="block text-900 text-xl font-medium mb-2">Experience</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <input id="experience1" type="text" [(ngModel)]="s.experience" placeholder="Experience"&ndash;&gt;-->
+<!--&lt;!&ndash;                                       pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">&ndash;&gt;-->
+
+<!--&lt;!&ndash;                                <label for="qualification1"&ndash;&gt;-->
+<!--&lt;!&ndash;                                       class="block text-900 text-xl font-medium mb-2">Qualification</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <input id="qualification1" type="text" [(ngModel)]="s.qualification"&ndash;&gt;-->
+<!--&lt;!&ndash;                                       placeholder="Qualification" pInputText class="w-full md:w-30rem mb-5"&ndash;&gt;-->
+<!--&lt;!&ndash;                                       style="padding:1rem">&ndash;&gt;-->
+<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </ng-container>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <button pButton pRipple (click)="onRegister3()" label="Save"&ndash;&gt;-->
+<!--&lt;!&ndash;                                class="w-full p-2 text-xl"></button>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <div class="flex align-items-center justify-content-center mb-2 gap-5 mt-2">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <a class="font-medium no-underline ml-2 text-right cursor-pointer"&ndash;&gt;-->
+<!--&lt;!&ndash;                               style="color: var(&#45;&#45;primary-color)" (click)="redirectToLogin()">Continue to Log In</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+
+
+<!--        &lt;!&ndash;        <div class="flex flex-column align-items-center justify-content-center" *ngIf="registerStep===4" >&ndash;&gt;-->
+<!--        &lt;!&ndash;            <div style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(&#45;&#45;primary-color) 10%, rgba(33, 150, 243, 0) 30%);">&ndash;&gt;-->
+<!--        &lt;!&ndash;                <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">&ndash;&gt;-->
+<!--        &lt;!&ndash;                    <div class="text-center mb-5">&ndash;&gt;-->
+<!--        &lt;!&ndash;                        <app-list-demo></app-list-demo>&ndash;&gt;-->
+<!--        &lt;!&ndash;&lt;!&ndash;                        <span class="text-600 font-medium">Add Skills</span>&ndash;&gt;&ndash;&gt;-->
+<!--        &lt;!&ndash;                    </div>&ndash;&gt;-->
+
+<!--        &lt;!&ndash;                    <div>&ndash;&gt;-->
+<!--        &lt;!&ndash;&lt;!&ndash;                        <label for="type" class="block text-900 text-xl font-medium mb-2">Type</label>&ndash;&gt;&ndash;&gt;-->
+<!--        &lt;!&ndash;&lt;!&ndash;                        <input id="type" type="text" [(ngModel)]="skill.type" placeholder="Type" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">&ndash;&gt;&ndash;&gt;-->
+
+<!--        &lt;!&ndash;&lt;!&ndash;                        <label for="experience1" class="block text-900 text-xl font-medium mb-2">Experience</label>&ndash;&gt;&ndash;&gt;-->
+<!--        &lt;!&ndash;&lt;!&ndash;                        <input id="experience1" type="text" [(ngModel)]="skill.experience" placeholder="Experience" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">&ndash;&gt;&ndash;&gt;-->
+
+<!--        &lt;!&ndash;&lt;!&ndash;                        <label for="qualification1" class="block text-900 text-xl font-medium mb-2">Qualification</label>&ndash;&gt;&ndash;&gt;-->
+<!--        &lt;!&ndash;&lt;!&ndash;                        <input id="qualification1" type="text" [(ngModel)]="skill.qualification" placeholder="Qualification" pInputText class="w-full md:w-30rem mb-5" style="padding:1rem">&ndash;&gt;&ndash;&gt;-->
+
+<!--        &lt;!&ndash;                        <button pButton pRipple (click)="onRegister4()" label="Save" class="w-full p-2 text-xl"></button>&ndash;&gt;-->
+
+<!--        &lt;!&ndash;                        <div class="flex align-items-center justify-content-center mb-2 gap-5 mt-2">&ndash;&gt;-->
+<!--        &lt;!&ndash;                            <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(&#45;&#45;primary-color)" (click)="redirectToLogin()">Continue to Log In</a>&ndash;&gt;-->
+<!--        &lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--        &lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--        &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--        &lt;!&ndash;            </div>&ndash;&gt;-->
+<!--        &lt;!&ndash;        </div>&ndash;&gt;-->
+
+<!--    </div>-->
+
+<!--</div>-->
+
+
+<div class="login-container surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+    <div class="animated-background"></div>
+    <div class="flex flex-column align-items-center justify-content-center position-relative">
+
+        <div class="logo-wrapper mb-5">
+            <img src="assets/demo/images/aadf/327133655_545051357589312_1350158626456850721_n.webp"
+                 alt="Sakai logo"
+                 class="logo-image">
+        </div>
+
+
+        <!-- Register Card with enhanced styling -->
+        <div class="login-card-wrapper">
+            <div class="w-full surface-card py-5 px-5">
+                <div class="text-center mb-5">
+                    <h1 class="title-text">Create an Account</h1>
+                    <span class="subtitle-text color-white">Join our platform</span>
+                </div>
+
+                <div class="form-container">
+                    <div class="input-wrapper">
+                        <label for="firstName" class="block color-white text-xl font-medium mb-2">First Name</label>
+                        <div class="input-group">
+                            <input id="firstName"
+                                   type="text"
+                                   [(ngModel)]="register.firstName"
+                                   placeholder="First Name"
+                                   pInputText
+                                   class="w-full md:w-30rem">
+                        </div>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="lastName" class="block color-white text-xl font-medium mb-2">Last Name</label>
+                        <div class="input-group">
+                            <input id="lastName"
+                                   type="text"
+                                   [(ngModel)]="register.lastName"
+                                   placeholder="Last Name"
+                                   pInputText
+                                   class="w-full md:w-30rem">
+                        </div>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="email" class="block color-white text-xl font-medium mb-2">Email</label>
+                        <div class="input-group">
+                            <input id="email"
+                                   type="email"
+                                   [(ngModel)]="register.email"
+                                   placeholder="Email address"
+                                   pInputText
+                                   class="w-full md:w-30rem">
+                        </div>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="username" class="block color-white text-xl font-medium mb-2">Username</label>
+                        <div class="input-group">
+                            <input id="username"
+                                   type="text"
+                                   [(ngModel)]="register.username"
+                                   placeholder="Username"
+                                   pInputText
+                                   class="w-full md:w-30rem">
+                        </div>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="password1" class="block color-white font-medium text-xl mb-2">Password</label>
+                        <div class="input-group">
+                            <input id="password1"
+                                   type="password"
+                                   [(ngModel)]="register.password"
+                                   placeholder="Password"
+                                   pInputText
+                                   class="w-full md:w-30rem p-3 pl-5">
+                        </div>
+                    </div>
+
+
+                    <div class="flex align-items-center justify-content-between mb-5 gap-5">
+                        <div class="flex align-items-center">
+                            <p-checkbox id="terms"
+                                        [binary]="true"
+                                        styleClass="mr-2">
+                            </p-checkbox>
+                            <label for="terms" class="remember-text">I agree to the Terms & Conditions</label>
+                        </div>
+                    </div>
+
+                    <button pButton
+                            pRipple
+                            (click)="onRegister()"
+                            label="Register"
+                            class="login-button w-full p-3 text-xl">
+                    </button>
+
+                    <div class="flex align-items-center justify-content-center gap-5 mt-5">
+                        <a class="register-link"
+                           (click)="redirectToLogin()">
+                            Already have an account? Sign in
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

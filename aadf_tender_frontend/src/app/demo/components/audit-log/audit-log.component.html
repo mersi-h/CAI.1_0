@@ -1,0 +1,83 @@
+<div class="audit-logs-container">
+    <h1 class="page-title">Audit Logs</h1>
+
+    <div class="filter-section">
+        <span class="filter-label">Filter by:</span>
+
+        <form [formGroup]="filterForm" class="filter-form">
+            <div class="filter-control">
+                <select formControlName="username" class="filter-select">
+                    <option value="">All Users</option>
+                    <option *ngFor="let user of users" [value]="user">{{ user }}</option>
+                </select>
+            </div>
+
+            <div class="filter-control">
+                <select formControlName="action" class="filter-select">
+                    <option value="">All Actions</option>
+                    <option *ngFor="let action of actions" [value]="action">{{ action }}</option>
+                </select>
+            </div>
+
+            <div class="filter-control">
+                <select formControlName="timePeriod" class="filter-select">
+                    <option *ngFor="let period of timePeriods" [value]="period.value">{{ period.label }}</option>
+                </select>
+            </div>
+
+            <button type="button" class="apply-button" (click)="applyFilters()">Apply Filters</button>
+        </form>
+    </div>
+
+    <div class="logs-table-container">
+        <table class="logs-table">
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>Action</th>
+                <th>Details</th>
+                <th>Event Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let log of filteredLogs">
+                <td class="username-cell">{{ log.username }}</td>
+                <td class="action-cell">
+                    <span class="action-badge" [ngClass]="getActionClass(log.action)">{{ log.action }}</span>
+                </td>
+                <td class="details-cell">{{ formatDetails(log) }}</td>
+                <td class="time-cell">{{ log.eventTime | date:'MMM d, y HH:mm' }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination-container" *ngIf="totalItems > pageSize">
+        <div class="pagination-info">
+            Showing {{ (currentPage - 1) * pageSize + 1 }}-{{
+            currentPage * pageSize > totalItems ? totalItems : currentPage * pageSize
+            }} of {{ totalItems }} entries
+        </div>
+
+        <div class="pagination-controls">
+            <button
+                    class="page-button"
+                    [disabled]="currentPage === 1"
+                    (click)="goToPage(currentPage - 1)"
+            >&lt;</button>
+
+            <button
+                    *ngFor="let page of getPageNumbers()"
+                    class="page-button"
+                    [class.active]="page === currentPage"
+                    (click)="goToPage(page)"
+            >{{ page }}</button>
+
+            <button
+                    class="page-button"
+                    [disabled]="currentPage === getTotalPages()"
+                    (click)="goToPage(currentPage + 1)"
+            >&gt;</button>
+        </div>
+    </div>
+</div>

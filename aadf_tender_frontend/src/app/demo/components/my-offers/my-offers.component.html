@@ -1,0 +1,129 @@
+<div class="offers-container">
+    <h1 class="page-title">Vendor Offers</h1>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+        <div class="search-container">
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+                type="text"
+                pInputText
+                [(ngModel)]="searchText"
+                placeholder="Search offers..."
+                class="p-inputtext-sm"
+        />
+      </span>
+        </div>
+
+        <div class="filter-options">
+            <p-dropdown
+                    [options]="statusOptions"
+                    [(ngModel)]="selectedStatus"
+                    placeholder="Filter by Status"
+                    styleClass="p-button-outlined p-button-sm"
+            ></p-dropdown>
+
+            <p-button
+                    label="Export"
+                    icon="pi pi-download"
+                    styleClass="p-button-sm"
+                    (onClick)="exportData()"
+            ></p-button>
+        </div>
+    </div>
+
+    <!-- Toast for notifications -->
+    <p-toast></p-toast>
+
+    <!-- Data Table -->
+    <p-table
+            [value]="filterOffers()"
+            [paginator]="true"
+            [rows]="10"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [rowsPerPageOptions]="[5, 10, 25]"
+            styleClass="p-datatable-sm"
+            styleClass="p-datatable-responsive" [style]="{'min-width': '100%'}"
+    >
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="submissionDate">
+                    Date Submitted <p-sortIcon field="submissionDate"></p-sortIcon>
+                </th>
+                <th pSortableColumn="vendorName">
+                    Vendor <p-sortIcon field="vendorName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="tenderId">
+                    Tender ID <p-sortIcon field="tenderId"></p-sortIcon>
+                </th>
+                <th pSortableColumn="tenderTitle">
+                    Tender Title <p-sortIcon field="tenderTitle"></p-sortIcon>
+                </th>
+                <th pSortableColumn="offerAmount">
+                    Offer Amount <p-sortIcon field="offerAmount"></p-sortIcon>
+                </th>
+                <th pSortableColumn="matchScore">
+                    Match Score <p-sortIcon field="matchScore"></p-sortIcon>
+                </th>
+                <th pSortableColumn="status">
+                    Status <p-sortIcon field="status"></p-sortIcon>
+                </th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-offer>
+            <tr>
+                <td>
+                    <div class="date-display">
+                        <span class="date-main">{{ offer.submissionDate | date:'MMM d, yyyy' }}</span>
+                        <span class="date-detail">
+              {{ formatRelativeTime(offer.submissionDate) }},
+                            {{ offer.submissionDate | date:'h:mm a' }}
+            </span>
+                    </div>
+                </td>
+                <td>{{ offer.vendorName }}</td>
+                <td>{{ offer.tenderId }}</td>
+                <td>{{ offer.tenderTitle }}</td>
+                <td>{{ offer.offerAmount | currency }}</td>
+                <td>
+          <span class="score-badge" [ngClass]="getScoreClass(offer.matchScore)">
+            {{ offer.matchScore.toFixed(1) }}
+          </span>
+                </td>
+                <td>
+          <span class="status-badge" [ngClass]="getStatusClass(offer.status)">
+            {{ offer.status }}
+          </span>
+                </td>
+                <td>
+                    <div class="action-buttons">
+                        <p-button
+                                icon="pi pi-eye"
+                                styleClass="p-button-sm p-button-info mr-2"
+                                (onClick)="viewOffer(offer)"
+                                pTooltip="View Offer Details"
+                        ></p-button>
+                        <p-button
+                                icon="pi pi-sort-alt"
+                                styleClass="p-button-sm p-button-secondary"
+                                (onClick)="compareOffers(offer)"
+                                pTooltip="Compare with Other Offers"
+                        ></p-button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8" class="text-center p-4">
+                    No offers found matching your criteria.
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

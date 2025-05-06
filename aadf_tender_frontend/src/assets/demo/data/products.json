@@ -1,0 +1,304 @@
+{
+"data": [
+{
+"id": "1000",
+"code": "f230fh0g3",
+"user": "John Doe",
+"message": "Invitation to join the Marketing Team",
+"state": "sent",
+"date": "2024-05-28",
+"daysPassed": 5,
+"status": "pending"
+},
+{
+"id": "1001",
+"code": "nvklal433",
+"user": "Jane Smith",
+"message": "Invitation to join the Development Team",
+"state": "received",
+"date": "2024-05-25",
+"daysPassed": 8,
+"status": "sent"
+},
+{
+"id": "1002",
+"code": "zz21cz3c1",
+"user": "Alice Johnson",
+"message": "Invitation to join the Design Team",
+"state": "sent",
+"date": "2024-05-30",
+"daysPassed": 3,
+"status": "pending"
+},
+{
+"id": "1003",
+"code": "244wgerg2",
+"user": "Bob Brown",
+"message": "Invitation to join the HR Team",
+"state": "received",
+"date": "2024-05-27",
+"daysPassed": 6,
+"status": "sent"
+},
+{
+"id": "1004",
+"code": "h456wer53",
+"user": "Charlie Green",
+"message": "Invitation to join the Finance Team",
+"state": "sent",
+"date": "2024-05-31",
+"daysPassed": 2,
+"status": "pending"
+},
+{
+"id": "1005",
+"code": "av2231fwg",
+"user": "David Lee",
+"message": "Invitation to join the Customer Support Team",
+"state": "received",
+"date": "2024-05-24",
+"daysPassed": 9,
+"status": "sent"
+},
+{
+"id": "1006",
+"code": "bib36pfvm",
+"user": "Emma White",
+"message": "Invitation to join the Product Team",
+"state": "sent",
+"date": "2024-05-29",
+"daysPassed": 4,
+"status": "pending"
+},
+{
+"id": "1007",
+"code": "mbvjkgip5",
+"user": "Fiona Black",
+"message": "Invitation to join the QA Team",
+"state": "received",
+"date": "2024-05-26",
+"daysPassed": 7,
+"status": "sent"
+},
+{
+"id": "1008",
+"code": "vbb124btr",
+"user": "George Blue",
+"message": "Invitation to join the Legal Team",
+"state": "sent",
+"date": "2024-06-01",
+"daysPassed": 1,
+"status": "pending"
+},
+{
+"id": "1009",
+"code": "cm230f032",
+"user": "Hannah Brown",
+"message": "Invitation to join the IT Team",
+"state": "received",
+"date": "2024-05-23",
+"daysPassed": 10,
+"status": "sent"
+},
+{
+"id": "1010",
+"code": "plb34234v",
+"user": "Ian Orange",
+"message": "Invitation to join the Operations Team",
+"state": "sent",
+"date": "2024-06-02",
+"daysPassed": 0,
+"status": "pending"
+},
+{
+"id": "1011",
+"code": "4920nnc2d",
+"user": "Jessica Pink",
+"message": "Invitation to join the Administration Team",
+"state": "received",
+"date": "2024-05-22",
+"daysPassed": 11,
+"status": "sent"
+},
+{
+"id": "1012",
+"code": "250vm23cc",
+"user": "Kyle Yellow",
+"message": "Invitation to join the Analytics Team",
+"state": "sent",
+"date": "2024-05-21",
+"daysPassed": 12,
+"status": "pending"
+},
+{
+"id": "1013",
+"code": "fldsmn31b",
+"user": "Laura Purple",
+"message": "Invitation to join the Research Team",
+"state": "received",
+"date": "2024-05-20",
+"daysPassed": 13,
+"status": "sent"
+},
+{
+"id": "1014",
+"code": "waas1x2as",
+"user": "Michael Gray",
+"message": "Invitation to join the Content Team",
+"state": "sent",
+"date": "2024-05-19",
+"daysPassed": 14,
+"status": "pending"
+},
+{
+"id": "1015",
+"code": "vb34btbg5",
+"user": "Nina Silver",
+"message": "Invitation to join the Security Team",
+"state": "received",
+"date": "2024-05-18",
+"daysPassed": 15,
+"status": "sent"
+},
+{
+"id": "1016",
+"code": "k8l6j58jl",
+"user": "Olivia Gold",
+"message": "Invitation to join the Supply Chain Team",
+"state": "sent",
+"date": "2024-05-17",
+"daysPassed": 16,
+"status": "pending"
+},
+{
+"id": "1017",
+"code": "v435nn85n",
+"user": "Paul Red",
+"message": "Invitation to join the Logistics Team",
+"state": "received",
+"date": "2024-05-16",
+"daysPassed": 17,
+"status": "sent"
+},
+{
+"id": "1018",
+"code": "09zx9c0zc",
+"user": "Quinn White",
+"message": "Invitation to join the Compliance Team",
+"state": "sent",
+"date": "2024-05-15",
+"daysPassed": 18,
+"status": "pending"
+},
+{
+"id": "1019",
+"code": "mnb5mb2m5",
+"user": "Rachel Blue",
+"message": "Invitation to join the Legal Team",
+"state": "received",
+"date": "2024-05-14",
+"daysPassed": 19,
+"status": "sent"
+},
+{
+"id": "1020",
+"code": "r23fwf2w3",
+"user": "Steve Green",
+"message": "Invitation to join the Risk Management Team",
+"state": "sent",
+"date": "2024-05-13",
+"daysPassed": 20,
+"status": "pending"
+},
+{
+"id": "1021",
+"code": "pxpzczo23",
+"user": "Tom Black",
+"message": "Invitation to join the Innovation Team",
+"state": "received",
+"date": "2024-05-12",
+"daysPassed": 21,
+"status": "sent"
+},
+{
+"id": "1022",
+"code": "2c42cb5cb",
+"user": "Uma Yellow",
+"message": "Invitation to join the Strategy Team",
+"state": "sent",
+"date": "2024-05-11",
+"daysPassed": 22,
+"status": "pending"
+},
+{
+"id": "1023",
+"code": "5k43kkk23",
+"user": "Victor Pink",
+"message": "Invitation to join the IT Team",
+"state": "received",
+"date": "2024-05-10",
+"daysPassed": 23,
+"status": "sent"
+},
+{
+"id": "1024",
+"code": "lm2tny2k4",
+"user": "Wendy Purple",
+"message": "Invitation to join the Operations Team",
+"state": "sent",
+"date": "2024-05-09",
+"daysPassed": 24,
+"status": "pending"
+},
+{
+"id": "1025",
+"code": "nbm5mv45n",
+"user": "Xander Brown",
+"message": "Invitation to join the HR Team",
+"state": "received",
+"date": "2024-05-08",
+"daysPassed": 25,
+"status": "sent"
+},
+{
+"id": "1026",
+"code": "zx23zc42c",
+"user": "Yvonne Gray",
+"message": "Invitation to join the Finance Team",
+"state": "sent",
+"date": "2024-05-07",
+"daysPassed": 26,
+"status": "pending"
+},
+{
+"id": "1027",
+"code": "acvx872gc",
+"user": "Zachary Green",
+"message": "Invitation to join the Marketing Team",
+"state": "received",
+"date": "2024-05-06",
+"daysPassed": 27,
+"status": "sent"
+},
+{
+"id": "1028",
+"code": "tx125ck42",
+"user": "Amber Red",
+"message": "Invitation to join the Development Team",
+"state": "sent",
+"date": "2024-05-05",
+"daysPassed": 28,
+"status": "pending"
+},
+{
+"id": "1029",
+"code": "gwuby345v",
+"user": "Brian Silver",
+"message": "Invitation to join the Design Team",
+"state": "received",
+"date": "2024-05-04",
+"daysPassed": 29,
+"status": "sent"
+}
+]
+}

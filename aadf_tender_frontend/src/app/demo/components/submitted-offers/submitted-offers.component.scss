@@ -1,0 +1,186 @@
+/* File: pending-offers.component.scss */
+.pending-offers-container {
+  padding: 1.5rem;
+  background-color: #f5f7fa;
+  min-height: calc(100vh - 64px); // Adjust based on your header height
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 0.25rem;
+}
+
+.page-subtitle {
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+
+  .search-container {
+    width: 300px;
+  }
+
+  .filter-options {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+}
+
+/* Table styles */
+:host ::ng-deep {
+  .p-datatable {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+
+    .p-datatable-header {
+      background-color: #fff;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .p-datatable-thead > tr > th {
+      background-color: #f9f9f9;
+      color: #555;
+      font-weight: 600;
+      padding: 0.75rem 1rem;
+    }
+
+    .p-datatable-tbody > tr {
+      background-color: #fff;
+
+      &:hover {
+        background-color: #f5f9ff;
+      }
+
+      > td {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid #f0f0f0;
+      }
+    }
+
+    .p-paginator {
+      background-color: #fff;
+      border-top: 1px solid #e0e0e0;
+      padding: 0.5rem;
+    }
+  }
+
+  .p-dropdown {
+    .p-dropdown-label {
+      padding-right: 2rem;
+    }
+  }
+
+  .p-dialog {
+    .p-dialog-header {
+      padding: 1.25rem 1.5rem 0.75rem;
+    }
+
+    .p-dialog-content {
+      padding: 0 1.5rem 1.5rem;
+    }
+
+    .p-dialog-footer {
+      padding: 0.75rem 1.5rem 1.25rem;
+      text-align: right;
+      border-top: 1px solid #f0f0f0;
+    }
+  }
+
+  // Fix for PrimeNG form spacing
+  .field {
+    margin-bottom: 1.5rem;
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #444;
+    }
+
+    small.p-error {
+      color: #f44336;
+      margin-top: 0.25rem;
+      display: block;
+    }
+  }
+}
+
+/* Status badges */
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+
+  &.status-draft {
+    background-color: #f0f0f0;
+    color: #666;
+  }
+
+  &.status-submitted {
+    background-color: #e6f7ff;
+    color: #0085ff;
+  }
+
+  &.status-under-review {
+    background-color: #fff8e6;
+    color: #d6a100;
+  }
+}
+
+/* Date formatting */
+.date-display {
+  display: flex;
+  flex-direction: column;
+
+  .date-main {
+    font-weight: 500;
+  }
+
+  .date-detail {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 0.25rem;
+  }
+
+  .date-edited {
+    font-size: 0.7rem;
+    color: #999;
+    font-style: italic;
+    margin-top: 0.25rem;
+  }
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 992px) {
+  .filter-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+
+    .search-container {
+      width: 100%;
+    }
+
+    .filter-options {
+      width: 100%;
+      flex-wrap: wrap;
+    }
+  }
+}

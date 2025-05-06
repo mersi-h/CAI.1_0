@@ -1,0 +1,194 @@
+<!-- submissions.component.html -->
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <h5>Submissions</h5>
+
+            <!-- Filters -->
+            <p-card header="Filters" styleClass="mb-4">
+                <div class="grid">
+                    <div class="col-12 md:col-3">
+                        <span class="p-float-label">
+                            <input pInputText id="search" [(ngModel)]="searchString" />
+                            <label for="search">Search Submissions</label>
+                        </span>
+                    </div>
+
+                    <div class="col-12 md:col-3">
+                        <p-dropdown [options]="tenders"
+                                    [(ngModel)]="selectedTender"
+                                    optionLabel="name"
+                                    placeholder="Select Tender"
+                                    [style]="{'width':'100%'}">
+                        </p-dropdown>
+                    </div>
+
+                    <div class="col-12 md:col-3">
+                        <p-dropdown [options]="vendors"
+                                    [(ngModel)]="selectedVendor"
+                                    optionLabel="name"
+                                    placeholder="Select Vendor"
+                                    [style]="{'width':'100%'}">
+                        </p-dropdown>
+                    </div>
+
+                    <div class="col-12 md:col-3">
+                        <p-calendar [(ngModel)]="selectedSubmissionDate"
+                                    placeholder="Select Submission Date"
+                                    [style]="{'width':'100%'}">
+                        </p-calendar>
+                    </div>
+
+                    <!-- Filter Summary -->
+                    <div class="col-12" *ngIf="activeFilters.length > 0">
+                        <div class="filter-summary p-2">
+                            <p-chip *ngFor="let filter of activeFilters"
+                                    [label]="filter.label + ': ' + filter.value"
+                                    [removable]="true"
+                                    (onRemove)="removeFilter(filter)"
+                                    styleClass="mr-2">
+                            </p-chip>
+                            <p-button label="Clear All"
+                                      icon="pi pi-times"
+                                      styleClass="p-button-text"
+                                      (click)="clearFilters()">
+                            </p-button>
+                        </div>
+                    </div>
+
+                    <div class="col-12 flex justify-content-end">
+                        <p-button label="Apply Filters"
+                                  icon="pi pi-search"
+                                  (click)="applyFilters()">
+                        </p-button>
+                    </div>
+                </div>
+            </p-card>
+
+            <!-- Statistics Summary -->
+            <p-card styleClass="mb-4">
+                <div class="grid">
+                    <div class="col-12 md:col-6">
+                        <div class="text-xl font-medium">Total Submissions</div>
+                        <div class="text-3xl font-bold text-primary">{{totalSubmissions}}</div>
+                    </div>
+                    <div class="col-12 md:col-6">
+                        <div class="text-xl font-medium">Average Submission Time</div>
+                        <div class="text-3xl font-bold text-primary">{{averageSubmissionTime}}</div>
+                    </div>
+                </div>
+            </p-card>
+
+            <!-- Submissions List -->
+            <div class="grid">
+                <div class="col-12 md:col-6 lg:col-4" *ngFor="let submission of submissions">
+                    <p-card>
+                        <ng-template pTemplate="header">
+                            <div class="flex justify-content-between align-items-center p-3">
+                                <span class="text-xl font-medium">{{submission.submissionId}}</span>
+                                <p-tag [value]="submission.status"
+                                       [severity]="getStatusColor(submission.status)">
+                                </p-tag>
+                            </div>
+                        </ng-template>
+
+                        <div class="submission-details">
+                            <div class="mb-3">
+                                <label class="block text-500">Tender ID</label>
+                                <span class="text-900">{{submission.tenderId}}</span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="block text-500">Vendor</label>
+                                <span class="text-900">{{submission.vendorName}}</span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="block text-500">Submission Date</label>
+                                <span class="text-900">{{submission.submissionDate | date}}</span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="block text-500">Evaluation Progress</label>
+                                <p-progressBar [value]="submission.evaluationProgress"
+                                               [showValue]="true">
+                                </p-progressBar>
+                            </div>
+                        </div>
+
+                        <ng-template pTemplate="footer">
+                            <div class="flex justify-content-end">
+                                <p-button icon="pi pi-eye"
+                                          label="View Details"
+                                          (click)="viewSubmission(submission)">
+                                </p-button>
+                            </div>
+                        </ng-template>
+                    </p-card>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex justify-content-center mt-4">
+                <p-paginator [rows]="10"
+                             [totalRecords]="totalRecords"
+                             (onPageChange)="onPageChange($event)">
+                </p-paginator>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- View Submission Dialog -->
+<p-dialog [(visible)]="displayViewDialog"
+          header="Submission Details"
+          [modal]="true"
+          [style]="{width: '50vw'}"
+          [draggable]="false"
+          [resizable]="false">
+    <div class="grid" *ngIf="selectedSubmission">
+        <div class="col-12">
+            <div class="submission-header mb-4">
+                <h5 class="mb-2">{{selectedSubmission.submissionId}}</h5>
+                <p-tag [value]="selectedSubmission.status"
+                       [severity]="getStatusColor(selectedSubmission.status)">
+                </p-tag>
+            </div>
+
+            <div class="grid">
+                <div class="col-12 md:col-6">
+                    <h6>Basic Information</h6>
+                    <div class="field">
+                        <label>Tender ID</label>
+                        <div class="font-medium">{{selectedSubmission.tenderId}}</div>
+                    </div>
+                    <div class="field">
+                        <label>Vendor Name</label>
+                        <div class="font-medium">{{selectedSubmission.vendorName}}</div>
+                    </div>
+                </div>
+
+                <div class="col-12 md:col-6">
+                    <h6>Submission Details</h6>
+                    <div class="field">
+                        <label>Submission Date</label>
+                        <div class="font-medium">{{selectedSubmission.submissionDate | date}}</div>
+                    </div>
+                    <div class="field">
+                        <label>Evaluation Progress</label>
+                        <p-progressBar [value]="selectedSubmission.evaluationProgress"
+                                       [showValue]="true">
+                        </p-progressBar>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <p-button label="Close"
+                  icon="pi pi-times"
+                  (click)="displayViewDialog = false">
+        </p-button>
+    </ng-template>
+</p-dialog>
+
+<!-- Toast -->
+<p-toast></p-toast>

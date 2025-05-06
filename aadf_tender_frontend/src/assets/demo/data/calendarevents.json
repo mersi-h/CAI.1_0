@@ -1,0 +1,23 @@
+[
+    {
+        "id": "1",
+        "title": "Meeting with Bob",
+        "start": "2024-06-02T10:00:00",
+        "end": "2024-06-02T11:00:00",
+        "description": "Discuss project status and next steps."
+    },
+    {
+        "id": "2",
+        "title": "Lunch with Alice",
+        "start": "2024-06-03T12:00:00",
+        "end": "2024-06-03T13:00:00",
+        "description": "Lunch at the new Italian restaurant."
+    },
+    {
+        "id": "3",
+        "title": "Conference Call",
+        "start": "2024-06-04T15:00:00",
+        "end": "2024-06-04T16:00:00",
+        "description": "Call with the overseas team."
+    }
+]
